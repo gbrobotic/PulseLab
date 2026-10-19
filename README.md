@@ -1,86 +1,65 @@
-# PulseLab 🫀
+# PulseLab
 
-**A pocket vitals analyzer built on the MAX30100 and ESP32-C3 Super Mini, with its own signal processing, HRV-based stress estimation, breathing-rate extraction, a Web Bluetooth dashboard, and accuracy validated against a commercial pulse oximeter.**
+Pocket vitals analyzer using a MAX30100 sensor and an ESP32-C3 Super Mini. This is my minor project.
 
-> ⚠️ PulseLab is an educational engineering project, **not a medical device**. Do not use it for diagnosis or treatment.
+The idea is simple: instead of just using a library and printing BPM, I want to work with the raw PPG signal from the sensor and do the processing myself. From the same signal I'm planning to get heart rate, SpO2, HRV (for a stress estimate) and breathing rate, show it on an OLED and send it over BLE to a web page. At the end I'll compare my readings with a normal fingertip pulse oximeter to see how accurate it really is.
 
----
-
-## Why this project is different
-
-Most MAX30100 projects call a library and print a BPM number. PulseLab works from the **raw photoplethysmography (PPG) signal** and does the processing itself:
-
-| Feature | How it works |
-|---|---|
-| Heart rate | DC removal → band-pass filter → adaptive-threshold peak detection |
-| SpO₂ | Ratio-of-ratios of red/IR AC and DC components, calibrated empirically |
-| Perfusion index | AC/DC ratio of the IR signal |
-| HRV + stress score | RMSSD and SDNN from beat-to-beat intervals, after artifact rejection |
-| Breathing rate | Respiratory modulation of the PPG baseline and beat intervals |
-| Signal quality | Finger detection, motion/clipping detection, confidence bar |
-| Guided breathing | OLED breathing coach with live HR/HRV feedback |
-| Wireless | BLE (standard Heart Rate Service + custom service) and a Web Bluetooth dashboard, no app install |
-| Validation | Bland–Altman analysis vs a commercial oximeter |
+Note: this is a student project, not a medical device.
 
 ## Hardware
 
 - ESP32-C3 Super Mini
-- MAX30100 pulse oximeter module
-- 1.3" SH1106 OLED (I²C)
-- 3.7 V Li-Po + TP4056 charger (with protection)
-- Vibration motor / buzzer, push button, slide switch
-- Zero PCB (perfboard) + 3D-printed enclosure
+- MAX30100 module (green board)
+- 1.3" OLED, I2C (SH1106)
+- 2 x 4.7k resistors (I2C pull-ups)
+- Li-Po battery + TP4056 charger (later)
+- Push button, vibration motor (later)
+- Zero PCB + 3D printed case (later)
 
-Full parts list, wiring and the MAX30100 pull-up fix: [`docs/HARDWARE.md`](docs/HARDWARE.md)
+Wiring and parts list: [docs/HARDWARE.md](docs/HARDWARE.md)
 
-Problems found during the build and how they were diagnosed: [`docs/DEBUG_LOG.md`](docs/DEBUG_LOG.md)
+Problems I ran into and how I fixed them: [docs/DEBUG_LOG.md](docs/DEBUG_LOG.md)
 
-## Repository layout
+## Folders
 
 ```
-PulseLab/
-├── docs/
-│   ├── ROADMAP.md        # Build plan, basic → advanced, with learning goals
-│   ├── HARDWARE.md       # BOM, pinout, wiring, known module issues
-│   ├── DEBUG_LOG.md      # Engineering log of faults found and fixed
-│   └── images/           # Photos and screenshots
-├── firmware/
-│   └── 01_sensor_bringup/  # Phase 1: I2C scan + raw IR/Red signal
-├── dashboard/            # Web Bluetooth dashboard (Phase 8)
-├── enclosure/            # 3D design files (STEP/STL) (Phase 10)
-├── hardware/             # Perfboard layout, photos (Phase 10)
-└── validation/
-    ├── readings_template.csv
-    └── analyze.py        # Bland–Altman accuracy analysis
+docs/          plan, hardware notes, debug log, images
+firmware/      Arduino sketches, one folder per phase
+validation/    readings sheet + script to compare with a real oximeter
+dashboard/     web bluetooth page (later)
+enclosure/     3D design files (later)
+hardware/      perfboard layout and photos (later)
 ```
 
-## Getting started
+## How to run
 
-1. Install the Arduino IDE and the **esp32** board package by Espressif.
-2. Board: **ESP32C3 Dev Module**, and set **USB CDC On Boot → Enabled** so Serial works over USB.
-3. Install the library **MAX30100lib** by OXullo Intersecans from the Library Manager.
-4. Wire the sensor as described in `docs/HARDWARE.md`.
-5. Flash `firmware/01_sensor_bringup`, open **Serial Plotter** at 115200 baud, and place your finger on the sensor.
+1. Arduino IDE with the esp32 board package (Espressif).
+2. Board: ESP32C3 Dev Module, and turn on "USB CDC On Boot", otherwise nothing shows in Serial.
+3. Install MAX30100lib by OXullo Intersecans. If you have any other MAX30100 library installed, remove it (see debug log).
+4. Wire it as in HARDWARE.md and upload `firmware/01_sensor_bringup`.
+5. Open Serial Plotter at 115200 and keep your finger lightly on the sensor.
 
-## Project status
+## Progress
 
-- [x] Phase 0 — Module check and pull-up fix
-- [x] Phase 1 — Raw signal bring-up
-- [ ] Phase 2 — Filtering and heart rate
-- [ ] Phase 3 — SpO₂ and perfusion index
-- [ ] Phase 4 — OLED UI and modes
-- [ ] Phase 5 — HRV and stress score
-- [ ] Phase 6 — Breathing rate
-- [ ] Phase 7 — Guided breathing mode
-- [ ] Phase 8 — BLE + Web Bluetooth dashboard
-- [ ] Phase 9 — Battery and power management
-- [ ] Phase 10 — Perfboard build and enclosure
-- [ ] Phase 11 — Validation study
-- [ ] Phase 12 — Documentation and demo
+- [x] Phase 0: check the modules, fix the I2C pull-up problem
+- [x] Phase 1: get the raw signal
+- [ ] Phase 2: filtering and heart rate
+- [ ] Phase 3: SpO2 and perfusion index
+- [ ] Phase 4: OLED screens, button, signal quality
+- [ ] Phase 5: HRV and stress score
+- [ ] Phase 6: breathing rate
+- [ ] Phase 7: guided breathing mode
+- [ ] Phase 8: BLE + web dashboard
+- [ ] Phase 9: battery
+- [ ] Phase 10: zero PCB and 3D case
+- [ ] Phase 11: accuracy test vs commercial oximeter
+- [ ] Phase 12: final report and demo
+
+Full plan with what each phase involves: [docs/ROADMAP.md](docs/ROADMAP.md)
 
 ## Results
 
-_Validation results go here after Phase 11 (mean error, bias, limits of agreement, Bland–Altman plots)._
+Will add after testing.
 
 ## License
 
