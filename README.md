@@ -25,6 +25,7 @@ Problems I ran into and how I fixed them: [docs/DEBUG_LOG.md](docs/DEBUG_LOG.md)
 ```
 docs/          plan, hardware notes, debug log, images
 firmware/      Arduino sketches, one folder per phase
+tests/         PC tests for the signal processing code
 validation/    readings sheet + script to compare with a real oximeter
 dashboard/     web bluetooth page (later)
 enclosure/     3D design files (later)
@@ -56,6 +57,9 @@ hardware/      perfboard layout and photos (later)
 - [ ] Phase 12: final report and demo
 
 Full plan with what each phase involves: [docs/ROADMAP.md](docs/ROADMAP.md)
+
+Notes per phase:
+- [Phase 2: filtering and heart rate](docs/phase2_heart_rate.md)
 
 ## Results
 

@@ -59,3 +59,35 @@ Note to self: add before/after photos of the board (`images/module_before.jpg`, 
 19 Oct 2026, Phase 1
 
 The plot looked like one slow wave instead of repeating pulses. The Arduino IDE 2 plotter only shows the last 50 points, and at 100 samples per second that's only half a second, less than one heartbeat. Changed the sketch to print every 4th sample so about 2 seconds fit on screen. The filter still runs on every sample, only the printing is reduced.
+
+## 4. Big jump in the signal after placing the finger
+
+19 Oct 2026, Phase 2
+
+On the first real run the beat marker in the plotter was about 10x taller than the pulse. When the finger goes on, the IR value jumps from ~150 to ~46,000 in a fraction of a second. The DC average (1 s time constant) takes a few seconds to catch up, and the filter turns that into a big swing that was still there after the 2 s settling time. I simulated it in the PC test: the signal after settling was up to 5x bigger than a normal pulse.
+
+Fix: during the 2 s settling time the DC average follows 10x faster, then goes back to normal. In the simulation the leftover jump is gone, and BPM appears about 4-5 s after placing the finger. The plotter also ignores the settling time when scaling the beat marker. Added this case as test 8 in `tests/test_heart_rate.cpp`.
+
+## 5. Wrong first BPM / beats missed after moving the finger
+
+19 Oct 2026, Phase 2
+
+In my screen recording the first BPM was 85.7 and then it slowly climbed to ~105. I tried to reproduce it in the PC simulation: a short bump (finger pressed harder for 150 ms) right after settling made the beat threshold jump up, and with its slow decay, beats were missed for 6-9 s. In one case the first BPM came out as 118 instead of 105.
+
+What I tried:
+- Limiting how fast the threshold can rise. It fixed the bump case, but then weak signals got extra beats counted and at 45 BPM it started counting the second wave of each pulse. Removed it.
+- Making the threshold drop faster only when beats stop coming (no beat for 1.5x the normal interval). This was enough on its own. Weak signals behave like before.
+- Starting the threshold from the pulse size measured during settling instead of zero.
+- Not showing the first BPM until the first 3 intervals agree.
+
+Now a bump costs about 2 s of missed beats instead of 6-9 s, and the first BPM is correct. Added as test 9.
+
+## 6. "MAX30100 not found" right after uploading
+
+19 Oct 2026, Phase 2
+
+After uploading, the sketch printed "MAX30100 not found" and stopped. After unplugging and plugging the USB back in, it worked.
+
+Likely reason: the ESP32 was reset in the middle of talking to the sensor. The sensor was still powered and waiting for the rest of the transfer, holding SDA low. Removing power resets the sensor, which is why replugging fixed it.
+
+Fix: before starting I2C, the sketch now sends up to 9 clock pulses on SCL and a STOP condition (standard I2C bus recovery). It also keeps retrying instead of stopping forever. I haven't been able to confirm this fixes it yet, since it doesn't happen every time. If it happens again, check whether it now recovers by itself.
