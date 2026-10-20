@@ -193,3 +193,9 @@ Looking at which ones agreed: always height and baseline. The baseline is the av
 Fix: the timing effect has to be one of the agreeing ones (or all 3 agree), and at least 30% of the combined power has to be near the peak. Pure noise: 62% -> 20% shown. Real recordings: 80% -> 75% shown, still all right. Details in `phase6_breathing.md`, step 4.
 
 Lesson: "two methods agree" only means something if they don't share the same error. I only found this because I wrote a test for the case where the answer should be "I don't know".
+
+## Open: occasional FIFO reset in raw recording mode
+
+20 Oct 2026, Phases 6-7
+
+Two recordings out of eight have one `# fifo reset` (no samples arrived for 300 ms): `raw_pace20.txt` (25 s into the recording) and `raw_guided1.txt` (8 s after the board started, before the session). Both with `SERIAL_MODE 3`, which sends ~2 KB/s over USB. The breathing code's longest step is 25-29 ms and the slowest OLED frame 35 ms, so neither explains 300 ms. My guess is a pause on the USB side (Windows opening the port, or the USB Serial buffer), but I haven't proven it. The watchdog handles it (reset, measurement starts again), and the replay tools follow the reset note. To check later: does it ever happen with `SERIAL_MODE 0` or 2?

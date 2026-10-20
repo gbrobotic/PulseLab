@@ -93,6 +93,7 @@ public:
   }
 
   float t() const { return t_; }
+  Sim& params() { return s_; }   // change settings while running (e.g. breathing slower from 60 s on)
   const std::vector<float>& beatTimes() const { return beats_; }  // true beat start times (s)
   float trueR() const { return rTrue_; }
   bool fingerOff() const { return fingerOff_; }

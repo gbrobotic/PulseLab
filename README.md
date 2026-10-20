@@ -52,7 +52,7 @@ hardware/      perfboard layout and photos (later)
 - [x] Phase 4: OLED screens, button, signal quality
 - [x] Phase 5: HRV and stress level
 - [x] Phase 6: breathing rate
-- [ ] Phase 7: guided breathing mode
+- [x] Phase 7: guided breathing mode
 - [ ] Phase 8: BLE + web dashboard
 - [ ] Phase 9: battery
 - [ ] Phase 10: zero PCB and 3D case
@@ -67,6 +67,7 @@ Notes per phase:
 - [Phase 4: OLED screens, button and signal quality](docs/phase4_display.md)
 - [Phase 5: HRV and stress level](docs/phase5_hrv.md)
 - [Phase 6: breathing rate](docs/phase6_breathing.md)
+- [Phase 7: guided breathing](docs/phase7_guided.md)
 
 PC tests and screen renders: [tests/README.md](tests/README.md)
 
@@ -88,6 +89,7 @@ Measured on my own finger, sitting still. Not a medical device, and the SpO2 for
 | HRV, sitting vs slow breathing (6/min) | about 36 ms ("Calm") vs about 60 ms ("Relaxed"), 2.5 min each |
 | Breathing rate vs the pacer (6, 10, 15, 20 /min) | every shown value within 2 /min, mean error 0.1-0.3; shown 12-100% of the time |
 | Breathing rate, free breathing | 31.3 /min (median) vs ~32 counted by hand |
+| Guided breathing (1 min / 3 min at 6 per min / 1 min) | HRV 13 -> 28 -> 13 ms, HR swing 21 BPM per breath, breathing measured 6.2 /min |
 
 Details and how each was measured are in the phase notes.
 

@@ -38,7 +38,7 @@ private:
 
 int main() {
   const float MS_PER_PAGE = 33.0f / 8;
-  for (Screen scr : {Screen::Live, Screen::Hrv, Screen::Breathe, Screen::Details, Screen::Wave}) {
+  for (Screen scr : {Screen::Live, Screen::Hrv, Screen::Breathe, Screen::Guided, Screen::Details, Screen::Wave}) {
     Sim s; s.seconds = 70; s.ampJitter = 0.15f; s.rsa = 0.04f;
     SimFinger f(s, 7);
     HeartRateDetector hr; hr.reset();
@@ -47,6 +47,7 @@ int main() {
     WaveBuffer wave;
     HrvAnalyzer hv; hv.reset(); HrvResult hvr{};
     BreathPacer pacer; pacer.next();  // 6 per minute
+    GuidedSession gs; bool gsStarted = false;
     SimDisplay d;
     uint8_t last[1024]; bool lastValid = false;
     HrResult h{}; Spo2Result r{}; QualityResult q{};
@@ -54,6 +55,8 @@ int main() {
     while (f.next(ir, red)) {
       pacer.tick();
       h = hr.process(ir); r = sp.process(ir, red, h); q = qm.process(h, r, ir, red); hvr = hv.process(h, q);
+      if (!gsStarted && f.t() > 5) { gs.start(180, 2, 60); gsStarted = true; }   // short "before", so the slow part is measured
+      gs.process(h, q);
       if (h.beat) beatFlash = 15;
       if (beatFlash) beatFlash--;
       if (++n % 4 == 0) {  // new wave point -> new frame (25 fps)
@@ -65,6 +68,7 @@ int main() {
         u.screen = scr; u.q = q; u.bpm = h.bpm; u.spo2 = r.spo2; u.pi = r.pi; u.r = r.r;
         u.beatFlash = beatFlash > 0; u.fingerSec = 20; u.wave = &wave; u.hrv = &hvr; u.hrvHistory = &hv;
         u.pacer = pacer.state(); u.recording = true;
+        u.guided = &gs.result(); u.guidedPacer = gs.pacerState();
         drawScreen(d, u);
         int changed = 0;
         for (int p = 0; p < 8; p++) {
@@ -75,7 +79,7 @@ int main() {
       }
     }
     float avg = (float)pages / frames;
-    const char* name = scr == Screen::Live ? "Live" : scr == Screen::Hrv ? "HRV" : scr == Screen::Breathe ? "Breathe" : scr == Screen::Details ? "Details" : "Wave";
+    const char* name = scr == Screen::Live ? "Live" : scr == Screen::Hrv ? "HRV" : scr == Screen::Breathe ? "Breathe" : scr == Screen::Guided ? "Guided" : scr == Screen::Details ? "Details" : "Wave";
     printf("%-8s 25 fps: %.1f of 8 pages change per frame (max %d) -> ~%.0f ms per frame, I2C busy ~%.0f%%\n",
            name, avg, maxPages, avg * MS_PER_PAGE, avg * MS_PER_PAGE * 25 / 10);
   }

@@ -87,7 +87,7 @@ private:
 //       * at least 30% of the combined power is within +-2 breaths/min of the
 //         peak (one clear peak, not a flat noisy spectrum)
 //     Otherwise "--" is shown. A missing number is better than a wrong one.
-// The settings were chosen on my 5 recordings (docs/phase6_breathing.md).
+// The settings were chosen on my 6 recordings (docs/phase6_breathing.md).
 
 constexpr float    RESP_FS          = 4.0f;    // series sample rate (Hz)
 constexpr uint16_t RESP_WINDOW      = 240;     // 60 s at 4 Hz

@@ -67,6 +67,10 @@ Done (20 Oct 2026): runs on the device; every shown rate within 2 /min of the pa
 
 Breathing animation on the OLED (in 4 s, out 6 s) with BPM and RMSSD updating live, and a before/after result at the end. Planning to use this for the demo.
 
+Built (20 Oct 2026): 1 min normal / 3 min at 6 per minute / 1 min normal, with heart rate and HRV for each part, and the heart rate swing per breath shown live instead of RMSSD (RMSSD needs 30 s of data, the swing changes every breath, which is more useful while doing it). See `phase7_guided.md`.
+
+Done (20 Oct 2026): first session on the device, HRV 13 -> 28 -> 13 ms, and the PC replay matches the device exactly.
+
 ## Phase 8: BLE + web dashboard
 
 - standard BLE Heart Rate Service so fitness apps can read BPM

@@ -1,7 +1,7 @@
 // Replays a raw recording (SERIAL_MODE 3, "index,ir,red" per sample) through
 // the same signal processing code that runs on the ESP32.
 //
-//   g++ -std=c++17 -O2 -I firmware/06_breathing tests/replay_raw.cpp -o replay_raw
+//   g++ -std=c++17 -O2 -I firmware/07_guided tests/replay_raw.cpp -o replay_raw
 //   ./replay_raw validation/logs/raw_pace10.txt          summary per pacer section
 //   ./replay_raw validation/logs/raw_pace10.txt beats    also one line per beat
 //   ./replay_raw validation/logs/raw_pace10.txt resp     also every breathing rate estimate
@@ -13,6 +13,9 @@
 // starts again, like when the finger is lifted. So does a "# fifo reset" note.
 // If the file has no pace notes but its name contains "pace<N>" (raw_pace10.txt),
 // the whole file is taken as pace N.
+// If the recording has a "# guided before from N" note (Phase 7), the guided
+// session is run again from there and its result printed, to compare with the
+// device's "# GUIDED_CSV" line.
 
 #include <cstdio>
 #include <cstdlib>
@@ -23,6 +26,7 @@
 #include "quality.h"
 #include "hrv.h"
 #include "breathing.h"
+#include "guided.h"
 #include <cmath>
 #include <algorithm>
 
@@ -53,6 +57,8 @@ int main(int argc, char** argv) {
   br.reset();
   auto resetAll = [&]() { hr.reset(); sp.reset(); qm.reset(); hv.reset(); bt.reset(); br.reset(); };
 
+  static GuidedSession gs;
+  bool guidedSeen = false;
   int filePace = 0;
   if (const char* pp = strstr(argv[1], "pace")) filePace = atoi(pp + 4);
   std::vector<Section> sections;
@@ -67,6 +73,7 @@ int main(int argc, char** argv) {
     Spo2Result s = sp.process(ir, red, h);
     QualityResult q = qm.process(h, s, ir, red);
     hv.process(h, q);
+    gs.process(h, q);
     BeatFeature bf;
     if (bt.process(ir, h, q, bf)) br.addBeat(bf);
     if (!h.finger) br.reset();
@@ -97,6 +104,9 @@ int main(int argc, char** argv) {
       int pace; unsigned long from;
       if (sscanf(line, "# pace %d from %lu", &pace, &from) == 2) newSection(pace, (uint32_t)from);
       if (strstr(line, "fifo reset")) { fifoResets++; resetAll(); }
+      if (strstr(line, "# guided before")) { gs.start(180); guidedSeen = true; }
+      if (strstr(line, "# guided cancelled")) gs.stop();
+      if (strstr(line, "GUIDED_CSV")) printf("device: %s", line + 2);
       continue;
     }
     unsigned long index; unsigned ir, red;
@@ -124,6 +134,11 @@ int main(int argc, char** argv) {
   }
   fclose(f);
 
+  if (guidedSeen) {
+    const GuidedResult& g = gs.result();
+    printf("replay: GUIDED_CSV,180,%.1f,%.1f,%.1f,%.1f,%.1f,%.1f,%.1f,%u  (phase at the end: %s)\n", g.before.bpm, g.during.bpm, g.after.bpm,
+           g.before.rmssd, g.during.rmssd, g.after.rmssd, g.swing, g.swingBreaths, guidedPhaseText(g.phase));
+  }
   printf("\n%s: %u samples (%.1f s), lost %u (%u filled in, %u restarts), broken lines %u, FIFO resets %u\n\n",
          argv[1], total, total / 100.0, lost, filled, restarts, badLines, fifoResets);
   printf("%-10s %8s %8s %8s %9s | %s\n", "pacer", "length", "good", "avg BPM", "RMSSD", "breathing rate (every 5 s after the first 60 s)");

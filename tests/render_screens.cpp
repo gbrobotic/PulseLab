@@ -161,6 +161,23 @@ int main(int argc, char** argv) {
   brUnsure.progress = 1;
   base.breath = &brOk;
   { UiData u = base; u.screen = Screen::Details; u.beatFlash = false; cases.push_back({"f_details", u}); }
+  // Phase 7: guided breathing
+  {
+    static GuidedResult gOff{}, gBefore{}, gSlow{}, gAfter{}, gDone{};
+    gBefore.phase = GuidedPhase::Before; gBefore.phaseLength = 6000; gBefore.phaseSamples = 1800;
+    gSlow.phase = GuidedPhase::Breathe; gSlow.phaseLength = 18000; gSlow.phaseSamples = 4200; gSlow.lastSwing = 17.4f;
+    gAfter.phase = GuidedPhase::After; gAfter.phaseLength = 6000; gAfter.phaseSamples = 5100;
+    gDone.phase = GuidedPhase::Done;
+    gDone.before = {72.4f, 36.2f, 70}; gDone.during = {71.1f, 61.8f, 210}; gDone.after = {70.3f, 44.9f, 70};
+    gDone.swing = 21.6f; gDone.swingBreaths = 16;
+    BreathPacer gp; gp.set(6); for (int i = 0; i < 250; i++) gp.tick();
+    UiData u = base; u.screen = Screen::Guided; u.beatFlash = false;
+    u.guided = &gOff;    cases.push_back({"p_guided_start", u});
+    u.guided = &gBefore; cases.push_back({"q_guided_before", u});
+    u.guided = &gSlow;   u.guidedPacer = gp.state(); cases.push_back({"r_guided_slow", u});
+    u.guided = &gAfter;  cases.push_back({"s_guided_after", u});
+    u.guided = &gDone;   u.guidedFollow = 6.1f; cases.push_back({"t_guided_result", u});
+  }
   {
     BreathPacer p6; p6.next();                       // 6 per minute
     UiData u = base; u.screen = Screen::Breathe; u.beatFlash = false;
