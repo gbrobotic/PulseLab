@@ -5,20 +5,23 @@ These run on a PC, not on the ESP32. They feed a simulated finger (`sim_finger.h
 Run from the repo root:
 
 ```
-g++ -std=c++17 -O2 -I firmware/07_guided tests/test_heart_rate.cpp -o test_hr && ./test_hr
-g++ -std=c++17 -O2 -I firmware/07_guided tests/test_spo2.cpp -o test_spo2 && ./test_spo2
-g++ -std=c++17 -O2 -I firmware/07_guided tests/test_quality.cpp -o test_quality && ./test_quality
-g++ -std=c++17 -O2 -I firmware/07_guided tests/test_hrv.cpp -o test_hrv && ./test_hrv
-g++ -std=c++17 -O2 -I firmware/07_guided tests/test_breathing.cpp -o test_breathing && ./test_breathing
-g++ -std=c++17 -O2 -I firmware/07_guided -I tests tests/test_guided.cpp -o test_guided && ./test_guided
+g++ -std=c++17 -O2 -I firmware/08_ble tests/test_heart_rate.cpp -o test_hr && ./test_hr
+g++ -std=c++17 -O2 -I firmware/08_ble tests/test_spo2.cpp -o test_spo2 && ./test_spo2
+g++ -std=c++17 -O2 -I firmware/08_ble tests/test_quality.cpp -o test_quality && ./test_quality
+g++ -std=c++17 -O2 -I firmware/08_ble tests/test_hrv.cpp -o test_hrv && ./test_hrv
+g++ -std=c++17 -O2 -I firmware/08_ble tests/test_breathing.cpp -o test_breathing && ./test_breathing
+g++ -std=c++17 -O2 -I firmware/08_ble -I tests tests/test_guided.cpp -o test_guided && ./test_guided
+g++ -std=c++17 -O2 -I firmware/08_ble tests/test_ble_packets.cpp -o test_ble_packets && ./test_ble_packets | node tests/test_ble_decode.js
 ```
+
+The last one checks that the web page (`dashboard/pulselab.js`) decodes the Bluetooth packets exactly as the firmware packs them. It needs Node.js.
 
 (The tests use the newest firmware folder. Older folders still work with the tests from their own commit.)
 
 Raw recordings (Phase 6, `SERIAL_MODE 3`):
 
 ```
-g++ -std=c++17 -O2 -I firmware/07_guided tests/replay_raw.cpp -o replay_raw
+g++ -std=c++17 -O2 -I firmware/08_ble tests/replay_raw.cpp -o replay_raw
 ./replay_raw validation/logs/raw_pace6.txt          summary per pacer section
 ./replay_raw validation/logs/raw_pace6.txt beats    plus one line per beat
 ./replay_raw validation/logs/raw_guided1.txt        a guided session (Phase 7): runs it again, compares with the device
@@ -31,7 +34,7 @@ python validation/plot_raw.py sim_raw.txt 60 100
 Replay a recorded Serial log through the HRV code:
 
 ```
-g++ -std=c++17 -O2 -I firmware/07_guided tests/replay_log.cpp -o replay_log
+g++ -std=c++17 -O2 -I firmware/08_ble tests/replay_log.cpp -o replay_log
 ./replay_log validation/logs/phase3.txt
 ./replay_log validation/logs/hrv_slow.txt all
 ```
@@ -49,7 +52,7 @@ On Windows this works with MinGW g++ or in WSL.
 ```
 git clone --depth 1 https://github.com/olikraus/u8g2.git
 gcc -O2 -c u8g2/csrc/*.c
-g++ -std=c++17 -O2 -I u8g2/csrc -I firmware/07_guided -I tests tests/render_screens.cpp *.o -o render
+g++ -std=c++17 -O2 -I u8g2/csrc -I firmware/08_ble -I tests tests/render_screens.cpp *.o -o render
 mkdir -p screens/movement && ./render screens
 pip install pillow
 python tests/screens_to_png.py screens docs/images/phase7_screens.png

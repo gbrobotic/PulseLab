@@ -78,6 +78,8 @@ Done (20 Oct 2026): first session on the device, HRV 13 -> 28 -> 13 ms, and the 
 - a web page using Web Bluetooth (works in Chrome) with live graph and CSV download
 - split the firmware into FreeRTOS tasks: sampling, processing, display, BLE
 
+Built (20 Oct 2026), see `phase8_ble.md`. The FreeRTOS split is not done on purpose: NimBLE already runs in its own task, and in the single loop the slowest parts are known (OLED frame ~35 ms, breathing step ~29 ms, FIFO full after 160 ms). The status line now prints `loop max`; I'll only split it into tasks if that shows a real problem with Bluetooth running. Splitting adds locking between tasks, which is a new way to get bugs.
+
 ## Phase 9: battery
 
 Battery voltage on GPIO3 through a divider, battery % on screen, deep sleep when idle. Measure the actual current and work out battery life.

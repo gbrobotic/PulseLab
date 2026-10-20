@@ -68,6 +68,9 @@ Notes per phase:
 - [Phase 5: HRV and stress level](docs/phase5_hrv.md)
 - [Phase 6: breathing rate](docs/phase6_breathing.md)
 - [Phase 7: guided breathing](docs/phase7_guided.md)
+- [Phase 8: Bluetooth and web dashboard](docs/phase8_ble.md) (built, testing on the board)
+
+Live dashboard (Chrome/Edge, needs the board, or press Demo): `dashboard/` - see [dashboard/README.md](dashboard/README.md)
 
 PC tests and screen renders: [tests/README.md](tests/README.md)
 
