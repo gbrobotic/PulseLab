@@ -321,10 +321,11 @@ void processSample(uint16_t ir, uint16_t red) {
 void printGuidedResult() {
 #if SERIAL_MODE == 2 || SERIAL_MODE == 3
   const GuidedResult& g = guided.result();
-  // seconds of slow breathing, HR before/slow/after, RMSSD before/slow/after, swing, swing breaths, breathing rate
-  Serial.printf("%sGUIDED_CSV,%u,%.1f,%.1f,%.1f,%.1f,%.1f,%.1f,%.1f,%u,%.1f\n", SERIAL_MODE == 3 ? "# " : "",
+  // seconds of slow breathing, HR before/slow/after, RMSSD before/slow/after, swing, swing breaths, breathing rate,
+  // SDNN before/slow/after (added in Phase 8, at the end so older parsers still work)
+  Serial.printf("%sGUIDED_CSV,%u,%.1f,%.1f,%.1f,%.1f,%.1f,%.1f,%.1f,%u,%.1f,%.1f,%.1f,%.1f\n", SERIAL_MODE == 3 ? "# " : "",
                 GUIDED_SLOW_SECONDS, g.before.bpm, g.during.bpm, g.after.bpm, g.before.rmssd, g.during.rmssd, g.after.rmssd,
-                g.swing, g.swingBreaths, guidedFollow);
+                g.swing, g.swingBreaths, guidedFollow, g.before.sdnn, g.during.sdnn, g.after.sdnn);
 #endif
 }
 

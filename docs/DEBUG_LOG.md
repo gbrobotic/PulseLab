@@ -199,3 +199,15 @@ Lesson: "two methods agree" only means something if they don't share the same er
 20 Oct 2026, Phases 6-7
 
 Two recordings out of eight have one `# fifo reset` (no samples arrived for 300 ms): `raw_pace20.txt` (25 s into the recording) and `raw_guided1.txt` (8 s after the board started, before the session). Both with `SERIAL_MODE 3`, which sends ~2 KB/s over USB. The breathing code's longest step is 25-29 ms and the slowest OLED frame 35 ms, so neither explains 300 ms. My guess is a pause on the USB side (Windows opening the port, or the USB Serial buffer), but I haven't proven it. The watchdog handles it (reset, measurement starts again), and the replay tools follow the reset note. To check later: does it ever happen with `SERIAL_MODE 0` or 2?
+
+## 15. "HRV went down while breathing slowly"
+
+20 Oct 2026, Phase 8
+
+Second guided session, started from the phone: heart rate swing 20 BPM per breath, breathing 6.1 /min, so the slow breathing clearly worked. But the result said RMSSD 36 -> 30 ms, and the page said "HRV went down 15% while breathing slowly".
+
+Not a bug in the numbers, a wrong choice of number. RMSSD is the difference between neighbouring beats. At 6 breaths a minute the heart rate goes up and down over ~13 beats, so each step is small even when the whole swing is big. The slow wave shows up in SDNN and the swing. Shaffer & Ginsberg (REFERENCES ref 6): "The RMSSD is less affected by respiration than is RSA". On top of that, my "before" minute wasn't calm (heart rate rising from 74 to 91 BPM).
+
+Fix: the session also keeps SDNN for each part and whether the heart rate was steady. The page compares SDNN and warns when "before" wasn't steady. My first session replayed: SDNN 20 -> 65 -> 38 ms.
+
+Lesson: in Phase 5 RMSSD happened to go up with slow breathing, and I took it as "the" HRV number for everything. A second test in different conditions showed it measures something else than what this exercise changes.

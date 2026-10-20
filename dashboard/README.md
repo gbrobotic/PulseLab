@@ -35,3 +35,11 @@ then open `http://localhost:8000` in Chrome.
 On Android, Chrome may ask for the "Nearby devices" permission and Bluetooth must be on.
 
 **Demo** makes up data (through the same decoding code), so the page can be shown without the board. Add `?fast` to the address to make the demo guided session 10x faster.
+
+## If it doesn't connect
+
+- Only one phone or laptop can be connected at a time. Close the page on the other device first.
+- Chrome or Edge (not Firefox, not on iPhone), on an `https://` or `localhost` address.
+- Don't pair PulseLab in the Windows / Android Bluetooth settings; the page connects by itself. If it was paired there, remove it.
+- The computer needs Bluetooth 4.0 (BLE) and Bluetooth switched on. `chrome://bluetooth-internals` shows if Chrome can use the adapter.
+- Mac: System Settings > Privacy > Bluetooth must allow Chrome.

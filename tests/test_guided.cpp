@@ -156,6 +156,7 @@ int main() {
       fclose(f);
       const GuidedResult& r = c.g.result();
       float pc[8] = {r.before.bpm, r.during.bpm, r.after.bpm, r.before.rmssd, r.during.rmssd, r.after.rmssd, r.swing, (float)r.swingBreaths};
+      printf("    SDNN (not in that recording's device line, added later): %.1f / %.1f / %.1f ms\n", r.before.sdnn, r.during.sdnn, r.after.sdnn);
       float worst = 0;
       for (int k = 0; k < 8; k++) worst = fmaxf(worst, fabsf(pc[k] - dev[k]));
       snprintf(buf, sizeof buf, "device HR %.1f/%.1f/%.1f HRV %.1f/%.1f/%.1f swing %.1f; PC HR %.1f/%.1f/%.1f HRV %.1f/%.1f/%.1f swing %.1f",

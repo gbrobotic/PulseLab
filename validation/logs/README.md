@@ -12,3 +12,6 @@ Raw Serial recordings (from capture_serial.py).
 | raw_pace6/10/15/20.txt | 2.5 min breathing with the pacer at 6/10/15/20 per min (15 and 20 right after coming in from outside, HR ~110) | Phase 6 raw |
 | raw_free2.txt | 2.5 min breathing normally after eating, counted ~80 breaths (~32 /min) | Phase 6 raw, with breathing code |
 | raw_guided1.txt | first guided session (1 min / 3 min slow / 1 min), afternoon, HR ~95 | Phase 7 raw |
+| dashboard_test1.csv | first test of the web dashboard over Bluetooth, CSV downloaded from the page (5.5 min) | Phase 8 |
+| ble_guided2_serial.txt | Serial Monitor during the second guided session, started from the phone over Bluetooth | Phase 8 |
+| dashboard_guided2.csv | page CSV from the same session | Phase 8 |

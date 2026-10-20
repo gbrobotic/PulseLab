@@ -50,7 +50,16 @@ struct PhaseStats {
   float    bpm;      // average heart rate from good intervals (0 = none)
   float    rmssd;    // HRV over the phase (0 = not enough clean data)
   uint16_t beats;    // good intervals used
+  float    sdnn;     // SDNN over the phase (0 = not enough clean data)
+  bool     steady;   // heart rate steady in this part (no rise or fall of more than 12%, see hrv.h)
 };
+// Why both RMSSD and SDNN: RMSSD looks at the difference between neighbouring
+// beats (fast changes). At 6 breaths a minute one breath is ~10 s, ~13 beats,
+// so the heart rate goes up and down slowly: a big swing, but small steps from
+// beat to beat. SDNN (spread of all intervals) and the swing show that slow
+// wave; RMSSD may not change much. Shaffer & Ginsberg 2017 (ref 6): "The RMSSD
+// is less affected by respiration than is RSA". My second session showed it:
+// swing 20 BPM per breath, but RMSSD 36 -> 30 ms.
 
 struct GuidedResult {
   GuidedPhase phase;
@@ -152,6 +161,8 @@ private:
     s.beats = nIbi_;
     const HrvResult& v = hrv_.result();
     s.rmssd = v.ready ? v.rmssd : 0.0f;
+    s.sdnn = v.ready ? v.sdnn : 0.0f;
+    s.steady = v.ready && v.steady;
     GuidedPhase p = r_.phase;
     if (p == GuidedPhase::Before) { r_.before = s; enter(GuidedPhase::Breathe); }
     else if (p == GuidedPhase::Breathe) {

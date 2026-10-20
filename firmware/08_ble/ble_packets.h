@@ -28,9 +28,11 @@
 //    guided   (notify, 4x per second during a session, 8 bytes)
 //      [0] phase  [1] flags: bit0 paused, bit1 breathing in  [2] circle size 0-255
 //      [3] seconds left in this part (u16)  [5] last swing x10 (u16)  [7] pace /min
-//    result   (read + notify at the end of a session, 17 bytes)
-//      [0..5]  HR before / slow / after x10 (u16)   [6..11] RMSSD before / slow / after x10 (u16)
-//      [12] swing x10 (u16)  [14] swing breaths  [15] breathing rate in the slow part x10 (u16)
+//    result   (read + notify at the end of a session, 20 bytes)
+//      [0..2]  HR before / slow / after (u8, BPM)
+//      [3..8]  RMSSD before / slow / after x10 (u16)   [9..14] SDNN before / slow / after x10 (u16)
+//      [15] swing x10 (u16)  [17] bits 0-4: swing breaths (max 18 in 3 min), bits 5/6/7: heart rate was
+//      steady before / slow / after   [18] breathing rate in the slow part x10 (u16)
 //    control  (write, 1 byte): 1 = start a guided session, 2 = cancel / close the result
 
 #pragma once
@@ -46,12 +48,12 @@
 
 namespace pulselab {
 
-constexpr uint8_t BLE_VERSION       = 1;
+constexpr uint8_t BLE_VERSION       = 2;   // 2: result packet with SDNN
 constexpr uint8_t BLE_WAVE_POINTS       = 8;
 constexpr uint8_t VITALS_LEN        = 20;
 constexpr uint8_t BLE_WAVE_LEN          = 2 + 2 * BLE_WAVE_POINTS;
 constexpr uint8_t GUIDED_LEN        = 8;
-constexpr uint8_t RESULT_LEN        = 17;
+constexpr uint8_t RESULT_LEN        = 20;
 constexpr uint8_t CMD_START_GUIDED  = 1;
 constexpr uint8_t CMD_CANCEL_GUIDED = 2;
 
@@ -124,11 +126,13 @@ inline void packGuided(uint8_t* out, const GuidedResult& g, const PacerState& p)
 
 inline void packResult(uint8_t* out, const GuidedResult& g, float follow) {
   memset(out, 0, RESULT_LEN);
-  putU16(out + 0, g.before.bpm * 10);  putU16(out + 2, g.during.bpm * 10);  putU16(out + 4, g.after.bpm * 10);
-  putU16(out + 6, g.before.rmssd * 10); putU16(out + 8, g.during.rmssd * 10); putU16(out + 10, g.after.rmssd * 10);
-  putU16(out + 12, g.swing * 10);
-  out[14] = (uint8_t)(g.swingBreaths > 255 ? 255 : g.swingBreaths);
-  putU16(out + 15, follow * 10);
+  out[0] = clampU8(g.before.bpm); out[1] = clampU8(g.during.bpm); out[2] = clampU8(g.after.bpm);
+  putU16(out + 3, g.before.rmssd * 10); putU16(out + 5, g.during.rmssd * 10); putU16(out + 7, g.after.rmssd * 10);
+  putU16(out + 9, g.before.sdnn * 10);  putU16(out + 11, g.during.sdnn * 10); putU16(out + 13, g.after.sdnn * 10);
+  putU16(out + 15, g.swing * 10);
+  out[17] = (uint8_t)(g.swingBreaths > 31 ? 31 : g.swingBreaths) | (g.before.steady ? 0x20 : 0) |
+            (g.during.steady ? 0x40 : 0) | (g.after.steady ? 0x80 : 0);
+  putU16(out + 18, follow * 10);
 }
 
 // UUIDs. Standard ones from the Bluetooth SIG, PulseLab's own made up once

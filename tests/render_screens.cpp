@@ -168,7 +168,7 @@ int main(int argc, char** argv) {
     gSlow.phase = GuidedPhase::Breathe; gSlow.phaseLength = 18000; gSlow.phaseSamples = 4200; gSlow.lastSwing = 17.4f;
     gAfter.phase = GuidedPhase::After; gAfter.phaseLength = 6000; gAfter.phaseSamples = 5100;
     gDone.phase = GuidedPhase::Done;
-    gDone.before = {72.4f, 36.2f, 70}; gDone.during = {71.1f, 61.8f, 210}; gDone.after = {70.3f, 44.9f, 70};
+    gDone.before = {80.3f, 35.6f, 81, 52.0f}; gDone.during = {77.2f, 30.3f, 227, 71.4f}; gDone.after = {79.0f, 27.4f, 79, 55.8f};
     gDone.swing = 21.6f; gDone.swingBreaths = 16;
     BreathPacer gp; gp.set(6); for (int i = 0; i < 250; i++) gp.tick();
     UiData u = base; u.screen = Screen::Guided; u.beatFlash = false;

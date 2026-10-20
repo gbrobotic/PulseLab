@@ -136,8 +136,8 @@ int main(int argc, char** argv) {
 
   if (guidedSeen) {
     const GuidedResult& g = gs.result();
-    printf("replay: GUIDED_CSV,180,%.1f,%.1f,%.1f,%.1f,%.1f,%.1f,%.1f,%u  (phase at the end: %s)\n", g.before.bpm, g.during.bpm, g.after.bpm,
-           g.before.rmssd, g.during.rmssd, g.after.rmssd, g.swing, g.swingBreaths, guidedPhaseText(g.phase));
+    printf("replay: GUIDED_CSV,180,%.1f,%.1f,%.1f,%.1f,%.1f,%.1f,%.1f,%u  SDNN %.1f/%.1f/%.1f  (phase at the end: %s)\n", g.before.bpm, g.during.bpm, g.after.bpm,
+           g.before.rmssd, g.during.rmssd, g.after.rmssd, g.swing, g.swingBreaths, g.before.sdnn, g.during.sdnn, g.after.sdnn, guidedPhaseText(g.phase));
   }
   printf("\n%s: %u samples (%.1f s), lost %u (%u filled in, %u restarts), broken lines %u, FIFO resets %u\n\n",
          argv[1], total, total / 100.0, lost, filled, restarts, badLines, fifoResets);

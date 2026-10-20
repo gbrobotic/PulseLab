@@ -110,3 +110,7 @@ The recording also has one `# fifo reset`, about 8 s after it started (before th
 |---|---|---|---|---|
 | 1 (20 Oct, afternoon) | 96 / 92 / 96 | 13 / 28 / 13 ms | 21 BPM | 6.2 /min |
 | 2 (resting, calm) | | | | |
+
+## Later (Phase 8): SDNN added
+
+A second session (started from the phone in Phase 8) had a 20 BPM swing but RMSSD going down (36 -> 30 ms). RMSSD measures beat-to-beat steps and is less affected by slow breathing than the swing and SDNN are (DEBUG_LOG #15). From Phase 8 on, the session also shows SDNN for each part. This first session, replayed with that code: **SDNN 20 -> 65 -> 38 ms**.

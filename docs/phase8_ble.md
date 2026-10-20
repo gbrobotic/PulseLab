@@ -2,7 +2,7 @@
 
 Code: `firmware/08_ble/` (new: `ble_packets.h`, `ble_link.h`) and `dashboard/` (`index.html`, `pulselab.js`).
 
-Status: built and tested on the PC (packets C++ -> JavaScript, page in a headless Chrome). Compiles for the ESP32-C3. Waiting for the first test with the real board.
+Status: works with the board from an Android phone: live data, CSV, guided session started from the page, nRF Connect. Bluetooth doesn't slow the measuring down (loop max 64 ms, 0 FIFO resets). Open: connecting from the laptop.
 
 ## What it does
 
@@ -78,11 +78,71 @@ While testing the page I found a bug in the demo: the pulse phase was worked out
 4. Start a guided session from the page.
 5. Watch the status line for a few minutes while connected: `loop max` should stay well under 160 ms and `FIFO resets` at 0.
 
+## First test with the board
+
+20 Oct 2026. Page from GitHub Pages in Chrome, board with `firmware/08_ble`. The page connected and showed everything live; I downloaded the CSV (`validation/logs/dashboard_test1.csv`, 646 rows over 5.5 min, 2 per second as planned).
+
+From the CSV: heart rate mostly 73-90 (median 79), SpO2 96-98%, HRV 19-67 ms, "Good signal" 75% of the time. My finger was off for ~45 s in the middle, and there was some movement around 230-250 s.
+
+**Why the breathing rate was "--" most of the time:** it needs 60 s of steady signal, and starts again from zero when the finger is lifted. The finger came off at ~105 s and again at ~262 s, so it restarted twice. Between ~150 and 230 s there were 60 s of good signal, but the 3 breathing effects didn't agree, so it showed "--" (by design: no number is better than a wrong one). The first value came at the end: 23 /min.
+
+What I changed on the page after this:
+- while collecting it now says how long is left ("keep still, 35 s more") instead of a percentage
+- when the current minute is unclear, the last clear value stays on screen in grey with its age ("last clear value, 12 s ago") for up to 30 s, then "--"
+- the CSV also has the HRV / breathing progress and finger columns, so a recording shows when it was collecting
+
+Checked in headless Chrome by sending made-up packets to the page: collecting -> "keep still, 36 s more", valid -> value, unclear after 12 s -> grey value + age, after 37 s -> "--", finger off -> "--".
+
+## Second test: guided session from the phone
+
+20 Oct 2026. Page on the Android phone (Chrome, GitHub Pages), session started with the page's button, Serial Monitor open on the laptop at the same time (`validation/logs/ble_guided2_serial.txt`, page CSV `dashboard_guided2.csv`).
+
+![Result on the phone](images/phase8_phone_result.jpg)
+
+**Does Bluetooth slow the measuring down?** No. 174 status lines (~6 min), connected the whole time, 10 messages per second during the session:
+
+| | Before Bluetooth (Phase 7) | With Bluetooth connected |
+|---|---|---|
+| loop max | ~35 ms | usually 10-37 ms, worst 64 ms |
+| FIFO resets | 0 | 0 |
+
+The sensor FIFO is full after 160 ms, so 64 ms leaves plenty of room. That's also why I didn't split the firmware into FreeRTOS tasks.
+
+**nRF Connect** (Android) found PulseLab, showed the Heart Rate service and the BPM on every beat. So the standard part works with an app that knows nothing about PulseLab.
+
+**The session:** HR 80 / 77 / 79, RMSSD 36 / 30 / 27 ms, swing 20 BPM per breath (15 breaths), breathing measured 6.1 /min. The page said "HRV went down 15% while breathing slowly", which was the wrong thing to say, see below.
+
 | Check | Result |
 |---|---|
-| nRF Connect sees the Heart Rate service and BPM | |
-| Page connects, numbers match the OLED | |
-| Guided session started from the page | |
-| loop max while connected (ms) | |
-| FIFO resets in 5 minutes connected | |
-| Wave packets lost (shown at the bottom of the page) | |
+| nRF Connect sees the Heart Rate service and BPM | yes |
+| Page connects, numbers match the OLED | yes (phone, Chrome, GitHub Pages) |
+| CSV download | yes |
+| Guided session started from the page | yes |
+| loop max while connected | 64 ms worst (10-37 ms usually) |
+| FIFO resets while connected | 0 in ~6 min |
+| Page on the laptop | didn't connect, not solved yet (see below) |
+
+## RMSSD was the wrong number for slow breathing
+
+The swing was 20 BPM per breath, so the slow breathing clearly worked, but RMSSD went down. Two reasons:
+
+1. **RMSSD measures fast changes.** It's the difference between neighbouring beats. At 6 breaths a minute one breath takes 10 s, about 13 beats, so the heart rate goes up and down *slowly*: a big total swing, but small steps from beat to beat. SDNN (the spread of all intervals) and the swing are what show this slow wave. Shaffer & Ginsberg ([ref 6](REFERENCES.md)): "Greater tidal volumes and lower respiration rates increase RSA", in short recordings the main source of SDNN is RSA "especially with slow, paced breathing", and "The RMSSD is less affected by respiration than is RSA".
+2. **The "before" part wasn't calm.** From the beat lines, my heart rate went from 74 up to 91 BPM (5 s averages) in that minute, maybe from settling in or talking. In the slow part the 10 s rhythm is clearly there after ~50 s (67 <-> 80, 70 <-> 83, 73 <-> 82 BPM).
+
+My first session (Phase 7) replayed with SDNN added: **SDNN 20 -> 65 -> 38 ms**, more than 3x up in the slow part (RMSSD was 13 -> 28 -> 13).
+
+What I changed:
+- the session also keeps **SDNN** for each part; the OLED result shows HR, RMSSD and SDNN; `GUIDED_CSV` has 3 more columns at the end
+- the page compares **SDNN** ("SDNN up 37% while breathing slowly") and no longer says "HRV went down" based on RMSSD
+- each part also remembers if the heart rate was **steady** (the same check as "HR changing" in Phase 5). If "before" wasn't, the page says so: not a calm baseline, sit quietly for a minute before starting
+- the result packet is still 20 bytes: HR is now a whole number (u8), which makes room for 3 SDNN values, and the 3 "steady" flags use the top bits of the breath count (max 18 in 3 min). The page still understands the old 17 byte packet. Version byte is now 2. The C++ -> JavaScript test covers both.
+
+## Not connecting from the laptop
+
+The page connected from the phone but not from the laptop. Not solved yet; things to check, most likely first:
+1. **Only one connection at a time.** If the phone is still connected (page open), PulseLab doesn't advertise, so the laptop can't see it. Close the page on the phone first.
+2. **Chrome or Edge**, not Firefox (no Web Bluetooth).
+3. **Don't pair it in Windows Bluetooth settings.** Web Bluetooth connects by itself; if PulseLab was paired in Windows, remove it there.
+4. The laptop needs **Bluetooth 4.0 (BLE)** and Bluetooth switched on. `chrome://bluetooth-internals` shows if Chrome can see the adapter and lists nearby devices.
+5. Mac: System Settings > Privacy > Bluetooth must allow Chrome.
+

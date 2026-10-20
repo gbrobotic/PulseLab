@@ -152,7 +152,8 @@
           <thead><tr><th></th><th>before</th><th>slow</th><th>after</th></tr></thead>
           <tbody>
             <tr><td>Heart rate</td><td id="r0"></td><td id="r1"></td><td id="r2"></td></tr>
-            <tr><td>HRV (ms)</td><td id="r3"></td><td id="r4"></td><td id="r5"></td></tr>
+            <tr><td>HRV, SDNN (ms)</td><td id="r6"></td><td id="r7"></td><td id="r8"></td></tr>
+            <tr><td>HRV, RMSSD (ms)</td><td id="r3"></td><td id="r4"></td><td id="r5"></td></tr>
           </tbody>
         </table>
         <p style="margin:10px 0 4px" id="rSwing"></p>
@@ -182,7 +183,7 @@ const log = [];                        // every vitals packet, for the CSV and t
 let trendKey = "bpm";
 
 // ---------- incoming data ----------
-const handlers = {
+window.handlers = {
   onHeartRate(hr) {
     $("heart").classList.add("beat");
     setTimeout(() => $("heart").classList.remove("beat"), 150);
@@ -197,8 +198,7 @@ const handlers = {
     $("pi").textContent = v.finger && v.pi > 0 ? v.pi.toFixed(2) : "--";
     $("rmssd").textContent = v.hrvReady ? v.rmssd.toFixed(0) : "--";
     $("stress").textContent = !v.finger ? "" : !v.hrvReady ? `collecting ${v.hrvProgress}%` : v.hrSteady ? v.stressText : "heart rate changing";
-    $("breath").textContent = v.breathValid ? v.breath.toFixed(1) : "--";
-    $("breathSub").textContent = !v.finger ? "" : v.breathProgress < 100 ? `collecting ${v.breathProgress}%` : v.breathValid ? "" : "not clear, keep still";
+    showBreath(v);
     const st = $("state");
     st.textContent = v.stateText;
     st.className = "value " + (v.state === 6 ? "good" : v.state >= 3 ? "warn" : "");
@@ -230,11 +230,19 @@ const handlers = {
   },
   onResult(r) {
     const f = (x, d) => (x > 0 ? x.toFixed(d) : "--");
-    [r.hr[0], r.hr[1], r.hr[2]].forEach((x, i) => ($("r" + i).textContent = f(x, 0)));
-    [r.rmssd[0], r.rmssd[1], r.rmssd[2]].forEach((x, i) => ($("r" + (i + 3)).textContent = f(x, 0)));
-    $("rSwing").innerHTML = r.swingBreaths ? `Heart rate swing per slow breath: <b>${r.swing.toFixed(0)} BPM</b> (${r.swingBreaths} breaths)` : "Heart rate swing: not enough clean breaths";
+    r.hr.forEach((x, i) => ($("r" + i).textContent = f(x, 0)));
+    r.rmssd.forEach((x, i) => ($("r" + (i + 3)).textContent = f(x, 0)));
+    r.sdnn.forEach((x, i) => ($("r" + (i + 6)).textContent = f(x, 0)));
+    let html = r.swingBreaths ? `Heart rate swing per slow breath: <b>${r.swing.toFixed(0)} BPM</b> (${r.swingBreaths} breaths)` : "Heart rate swing: not enough clean breaths";
+    // Slow breathing shows up in the swing and in SDNN (the slow wave). RMSSD
+    // (beat-to-beat steps) is less affected by breathing, so it isn't used for this.
+    if (r.sdnn[0] > 0 && r.sdnn[1] > 0) {
+      const ch = 100 * (r.sdnn[1] / r.sdnn[0] - 1);
+      html += `<br>SDNN ${ch >= 0 ? "up" : "down"} <b>${Math.abs(ch).toFixed(0)}%</b> while breathing slowly`;
+    }
+    if (!r.steady[0]) html += `<br><span class="warn">Your heart rate was rising or falling in the "before" part (moving, talking?), so it isn't a calm baseline. Sit quietly for a minute before starting.</span>`;
+    $("rSwing").innerHTML = html;
     $("rFollow").textContent = r.follow > 0 ? `Breathing rate measured during the slow part: ${r.follow.toFixed(1)} per minute (pacer: 6)` : "";
-    if (r.rmssd[0] > 0 && r.rmssd[1] > 0) $("rSwing").innerHTML += `<br>HRV ${r.rmssd[1] >= r.rmssd[0] ? "went up" : "went down"} <b>${Math.abs(100 * (r.rmssd[1] / r.rmssd[0] - 1)).toFixed(0)}%</b> while breathing slowly`;
     showGuided(4);
   },
   onDisconnect() {
@@ -242,6 +250,33 @@ const handlers = {
     dev = null;
   },
 };
+
+// Breathing rate: needs 60 s of steady signal. While the current minute is
+// unclear, the last good value stays visible (grey, with its age) for 30 s.
+let lastBreath = null;
+function showBreath(v) {
+  const el = $("breath"), sub = $("breathSub");
+  el.style.color = "";
+  if (!v.finger) { lastBreath = null; el.textContent = "--"; sub.textContent = ""; return; }
+  if (v.breathValid) {
+    lastBreath = { rate: v.breath, t: Date.now() };
+    el.textContent = v.breath.toFixed(1); sub.textContent = ""; return;
+  }
+  if (v.breathProgress < 100) {
+    lastBreath = null;
+    el.textContent = "--";
+    sub.textContent = `keep still, ${Math.ceil(60 * (1 - v.breathProgress / 100))} s more`;
+    return;
+  }
+  const age = lastBreath ? Math.round((Date.now() - lastBreath.t) / 1000) : Infinity;
+  if (age <= 30) {
+    el.textContent = lastBreath.rate.toFixed(1); el.style.color = css("--muted");
+    sub.textContent = `last clear value, ${age} s ago`;
+  } else {
+    el.textContent = "--";
+    sub.textContent = "not clear: keep still, breathe normally";
+  }
+}
 
 function showGuided(phase) {
   guidedPhase = phase;
@@ -290,7 +325,8 @@ $("trendSel").onclick = (e) => {
   drawTrend();
 };
 $("csv").onclick = () => {
-  const cols = ["bpm", "spo2", "pi", "rmssd", "breath", "quality", "stateText", "showBpm", "showSpo2", "hrvReady", "breathValid", "guidedPhase"];
+  const cols = ["bpm", "spo2", "pi", "rmssd", "breath", "quality", "stateText", "showBpm", "showSpo2", "hrvReady", "breathValid",
+                "hrvProgress", "breathProgress", "finger", "guidedPhase"];
   const rows = ["time," + cols.join(",")].concat(log.map((r) => new Date(r.t).toISOString() + "," + cols.map((c) => r[c]).join(",")));
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([rows.join("\n")], { type: "text/csv" }));

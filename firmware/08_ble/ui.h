@@ -511,21 +511,24 @@ void drawGuided(D& d, const UiData& u) {
     const PhaseStats* ps[3] = {&g->before, &g->during, &g->after};
     const int xs[3] = {72, 100, 127};
     d.drawStr(0, 28, "HR");
-    d.drawStr(0, 37, "HRV ms");
+    d.drawStr(0, 37, "RMSSD ms");
+    d.drawStr(0, 46, "SDNN ms");
     for (int i = 0; i < 3; i++) {
       if (ps[i]->bpm > 0) snprintf(buf, sizeof buf, "%d", roundi(ps[i]->bpm)); else snprintf(buf, sizeof buf, "--");
       drawRight(d, xs[i], 28, buf);
       if (ps[i]->rmssd > 0) snprintf(buf, sizeof buf, "%d", roundi(ps[i]->rmssd)); else snprintf(buf, sizeof buf, "--");
       drawRight(d, xs[i], 37, buf);
+      if (ps[i]->sdnn > 0) snprintf(buf, sizeof buf, "%d", roundi(ps[i]->sdnn)); else snprintf(buf, sizeof buf, "--");
+      drawRight(d, xs[i], 46, buf);
     }
-    d.drawHLine(0, 40, 128);
+    d.drawHLine(0, 48, 128);
     if (g->swingBreaths) snprintf(buf, sizeof buf, "HR swing/breath %d bpm", roundi(g->swing));
     else snprintf(buf, sizeof buf, "HR swing/breath --");
-    d.drawStr(0, 49, buf);
-    if (u.guidedFollow > 0) snprintf(buf, sizeof buf, "you breathed %.1f /min", u.guidedFollow);
-    else snprintf(buf, sizeof buf, "you breathed -- /min");
-    d.drawStr(0, 57, buf);
-    drawRight(d, 127, 63, "long press: close");
+    d.drawStr(0, 56, buf);
+    if (u.guidedFollow > 0) snprintf(buf, sizeof buf, "you %.1f/min", u.guidedFollow);
+    else snprintf(buf, sizeof buf, "you --/min");
+    d.drawStr(0, 63, buf);
+    drawRight(d, 127, 63, "hold: close");
     return;
   }
 

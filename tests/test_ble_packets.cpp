@@ -33,7 +33,7 @@ int main() {
   GuidedResult g{}; g.phase = GuidedPhase::Breathe; g.phaseLength = 18000; g.phaseSamples = 4150;
   packVitals(p, h, s, q, v, b, g);
   printf("{\"type\":\"vitals\",\"len\":%d,", VITALS_LEN); hex(p, VITALS_LEN);
-  printf(",\"expect\":{\"version\":1,\"state\":6,\"stateText\":\"Good signal\",\"quality\":93,\"showBpm\":true,\"showSpo2\":false,"
+  printf(",\"expect\":{\"version\":2,\"state\":6,\"stateText\":\"Good signal\",\"quality\":93,\"showBpm\":true,\"showSpo2\":false,"
          "\"hrvReady\":true,\"hrSteady\":true,\"breathValid\":true,\"finger\":true,\"bpm\":73.5,\"spo2\":97.8,\"pi\":1.88,"
          "\"rmssd\":61.4,\"breath\":6.2,\"hrvProgress\":100,\"breathProgress\":50,\"stress\":4,\"stressText\":\"Relaxed\","
          "\"guidedPhase\":2,\"guidedLeft\":139}}\n");
@@ -56,12 +56,14 @@ int main() {
   printf(",\"expect\":{\"phase\":2,\"phaseText\":\"slow breathing\",\"paused\":true,\"inhale\":true,\"level\":0.502,\"left\":1,\"lastSwing\":17.4,\"pace\":6}}\n");
 
   GuidedResult done{}; done.phase = GuidedPhase::Done;
-  done.before = {95.9f, 12.9f, 70}; done.during = {92.0f, 27.6f, 270}; done.after = {95.7f, 13.1f, 95};
-  done.swing = 20.9f; done.swingBreaths = 15;
-  packResult(p, done, 6.2f);
+  done.before = {80.3f, 35.6f, 81, 52.04f, false}; done.during = {77.2f, 30.3f, 227, 71.4f, true}; done.after = {79.0f, 27.4f, 79, 55.8f, true};
+  done.swing = 19.7f; done.swingBreaths = 15;
+  packResult(p, done, 6.1f);
   printf("{\"type\":\"result\",\"len\":%d,", RESULT_LEN); hex(p, RESULT_LEN);
-  printf(",\"expect\":{\"hr\":[95.9,92,95.7],\"rmssd\":[12.9,27.6,13.1],\"swing\":20.9,\"swingBreaths\":15,\"follow\":6.2}}\n");
+  printf(",\"expect\":{\"hr\":[80,77,79],\"rmssd\":[35.6,30.3,27.4],\"sdnn\":[52,71.4,55.8],\"swing\":19.7,\"swingBreaths\":15,\"follow\":6.1,\"steady\":[false,true,true]}}\n");
 
+  // an old (version 1, 17 byte) result packet must still decode
+  printf("{\"type\":\"result\",\"len\":17,\"hex\":\"bf039803bd03810014018300d1000f3e00\",\"expect\":{\"hr\":[95.9,92,95.7],\"rmssd\":[12.9,27.6,13.1],\"swing\":20.9,\"swingBreaths\":15,\"follow\":6.2}}\n");
   printf("{\"type\":\"sizes\",\"vitals\":%d,\"wave\":%d,\"guided\":%d,\"result\":%d}\n", VITALS_LEN, BLE_WAVE_LEN, GUIDED_LEN, RESULT_LEN);
   return 0;
 }

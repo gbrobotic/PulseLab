@@ -11,6 +11,7 @@ function dv(hex) {
 function close(a, b) {
   if (typeof b === "number") return Math.abs(a - b) <= (Number.isInteger(b) && b > 100 ? 1 : 0.011);
   if (Array.isArray(b)) return a.length === b.length && b.every((x, i) => close(a[i], x));
+  if (typeof b === "boolean") return a === b;
   return a === b;
 }
 const decoders = { hr: PL.decodeHeartRate, vitals: PL.decodeVitals, wave: PL.decodeWave, guided: PL.decodeGuided, result: PL.decodeResult };

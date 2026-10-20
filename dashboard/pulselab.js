@@ -72,10 +72,20 @@
   }
 
   function decodeResult(dv) {
+    if (dv.byteLength < 20) {   // version 1 firmware (Phase 8 before SDNN): 17 bytes, HR x10
+      return {
+        hr: [u16(dv, 0) / 10, u16(dv, 2) / 10, u16(dv, 4) / 10],
+        rmssd: [u16(dv, 6) / 10, u16(dv, 8) / 10, u16(dv, 10) / 10], sdnn: [0, 0, 0],
+        swing: u16(dv, 12) / 10, swingBreaths: dv.getUint8(14), follow: u16(dv, 15) / 10, steady: [true, true, true],
+      };
+    }
+    const b = dv.getUint8(17);
     return {
-      hr: [u16(dv, 0) / 10, u16(dv, 2) / 10, u16(dv, 4) / 10],
-      rmssd: [u16(dv, 6) / 10, u16(dv, 8) / 10, u16(dv, 10) / 10],
-      swing: u16(dv, 12) / 10, swingBreaths: dv.getUint8(14), follow: u16(dv, 15) / 10,
+      hr: [dv.getUint8(0), dv.getUint8(1), dv.getUint8(2)],
+      rmssd: [u16(dv, 3) / 10, u16(dv, 5) / 10, u16(dv, 7) / 10],
+      sdnn: [u16(dv, 9) / 10, u16(dv, 11) / 10, u16(dv, 13) / 10],
+      swing: u16(dv, 15) / 10, swingBreaths: b & 0x1f, follow: u16(dv, 18) / 10,
+      steady: [!!(b & 0x20), !!(b & 0x40), !!(b & 0x80)],
     };
   }
 
@@ -114,7 +124,7 @@
       this.control = await pl.getCharacteristic(UUID.control);
       // a result from a session that finished before connecting
       const last = await result.readValue();
-      if (last.byteLength >= 17 && last.getUint16(0, true) > 0) this.h.onResult && this.h.onResult(decodeResult(last));
+      if (last.byteLength >= 17 && last.getUint8(0) > 0) this.h.onResult && this.h.onResult(decodeResult(last));
       return this.device.name;
     }
 
@@ -199,9 +209,10 @@
         g.phase++; g.inPhase = 0;
         g.left = g.phase === 2 ? 180 * this.speed : 60 * this.speed;
         if (g.phase === 4) {
-          const r = new DataView(new ArrayBuffer(17));
-          [724, 711, 703, 362, 618, 449].forEach((v, i) => r.setUint16(2 * i, v, true));
-          r.setUint16(12, 216, true); r.setUint8(14, 16); r.setUint16(15, 61, true);
+          const r = new DataView(new ArrayBuffer(20));
+          [72, 71, 70].forEach((v, i) => r.setUint8(i, v));
+          [362, 418, 389, 480, 760, 530].forEach((v, i) => r.setUint16(3 + 2 * i, v, true));
+          r.setUint16(15, 216, true); r.setUint8(17, 16 | 0xe0); r.setUint16(18, 61, true);
           this.h.onResult && this.h.onResult(decodeResult(r));
         }
       }
