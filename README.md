@@ -37,15 +37,15 @@ hardware/      perfboard layout and photos (later)
 1. Arduino IDE with the esp32 board package (Espressif).
 2. Board: ESP32C3 Dev Module, and turn on "USB CDC On Boot", otherwise nothing shows in Serial.
 3. Install MAX30100lib by OXullo Intersecans. If you have any other MAX30100 library installed, remove it (see debug log).
-4. Wire it as in HARDWARE.md and upload `firmware/01_sensor_bringup`.
+4. Wire it as in HARDWARE.md and upload `firmware/01_sensor_bringup` (or the latest phase folder).
 5. Open Serial Plotter at 115200 and keep your finger lightly on the sensor.
 
 ## Progress
 
 - [x] Phase 0: check the modules, fix the I2C pull-up problem
 - [x] Phase 1: get the raw signal
-- [ ] Phase 2: filtering and heart rate
-- [ ] Phase 3: SpO2 and perfusion index
+- [x] Phase 2: filtering and heart rate
+- [x] Phase 3: SpO2 and perfusion index
 - [ ] Phase 4: OLED screens, button, signal quality
 - [ ] Phase 5: HRV and stress score
 - [ ] Phase 6: breathing rate
@@ -60,6 +60,7 @@ Full plan with what each phase involves: [docs/ROADMAP.md](docs/ROADMAP.md)
 
 Notes per phase:
 - [Phase 2: filtering and heart rate](docs/phase2_heart_rate.md)
+- [Phase 3: SpO2 and perfusion index](docs/phase3_spo2.md)
 
 ## Results
 

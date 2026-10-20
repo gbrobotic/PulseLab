@@ -87,6 +87,8 @@ Compared with a reference (to fill in):
 
 | Reading | PulseLab BPM | Phone / oximeter BPM | Difference |
 |---|---|---|---|
-| 1 |92.2|98|-5.8|
-| 2 |93|97|-4|
-| 3 | 90|92| -2|
+| 1 | 92.2 | 98 (phone) | -5.8 |
+| 2 | 93 | 97 (phone) | -4 |
+| 3 | 90 | 92 (phone) | -2 |
+
+Average difference -3.9 BPM. All three are lower than the phone, so there may be a small offset, but 3 readings against a phone camera app isn't enough to say which one is off. To check: count beats in Serial Monitor mode for exactly 60 s while counting my pulse at the wrist. If those match, beat detection is right and the difference comes from averaging or the phone. Will also check against a proper oximeter in Phase 11.

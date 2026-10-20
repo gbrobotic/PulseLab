@@ -91,3 +91,13 @@ After uploading, the sketch printed "MAX30100 not found" and stopped. After unpl
 Likely reason: the ESP32 was reset in the middle of talking to the sensor. The sensor was still powered and waiting for the rest of the transfer, holding SDA low. Removing power resets the sensor, which is why replugging fixed it.
 
 Fix: before starting I2C, the sketch now sends up to 9 clock pulses on SCL and a STOP condition (standard I2C bus recovery). It also keeps retrying instead of stopping forever. I haven't been able to confirm this fixes it yet, since it doesn't happen every time. If it happens again, check whether it now recovers by itself.
+
+## 7. Nothing at all on Serial Monitor / Plotter with the Phase 3 sketch
+
+20 Oct 2026, Phase 3
+
+Uploaded fine, but no output at all, not even zeros or "MAX30100 not found". Phase 2 had worked the same morning.
+
+Cause: Tools > USB CDC On Boot was set to Disabled for the new sketch. On the ESP32-C3 that sends `Serial` to the UART pins (GPIO20/21) instead of USB, so the IDE gets nothing. Setting it to Enabled fixed it.
+
+So I don't have to guess next time, the sketch now flashes the onboard LED (GPIO8) on every heartbeat. If the LED flashes but Serial is empty, the code is running and it's a Serial setting.
