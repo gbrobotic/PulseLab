@@ -1,6 +1,6 @@
 // Tests the Phase 3 SpO2 / perfusion index code on simulated red + IR signals.
 //
-//   g++ -std=c++17 -O2 -I firmware/03_spo2 tests/test_spo2.cpp -o test_spo2
+//   g++ -std=c++17 -O2 -I firmware/04_display tests/test_spo2.cpp -o test_spo2
 //   ./test_spo2
 //
 // The simulated finger has a known "true" R built in:
@@ -10,26 +10,12 @@
 
 #include <cstdio>
 #include <cmath>
-#include <random>
 #include <vector>
 #include "spo2.h"
 
 using namespace pulselab;
 
-struct Sim {
-  float seconds   = 40;
-  float bpm       = 75;
-  float rStart    = 0.5f;   // true R at the start
-  float rEnd      = -1;     // if set, R changes linearly to this by the end
-  float dcIr      = 46000;
-  float dcRed     = 30000;
-  float piIr      = 0.02f;  // IR pulse size as a fraction of DC (2%)
-  float noiseIr   = 5;
-  float noiseRed  = 8;      // red is usually noisier on the MAX30100
-  float breathing = 0.004f; // breathing changes the DC by 0.4%
-  float bumpAt    = -1;     // short finger-pressure bump
-  float fingerOffFrom = -1, fingerOffTo = -1;
-};
+#include "sim_finger.h"
 
 struct Out {
   float spo2 = 0, r = 0, pi = 0;
@@ -39,53 +25,21 @@ struct Out {
   float spo2AtOffEnd = -1;  // SpO2 shown while the finger was off
 };
 
-static float pulseShape(float t) {
-  auto g = [](float x, float mu, float s) { return expf(-0.5f * (x - mu) * (x - mu) / (s * s)); };
-  return g(t, 0.12f, 0.05f) + 0.35f * g(t, 0.38f, 0.06f);
-}
-
 static Out run(const Sim& s, unsigned seed) {
-  std::mt19937 rng(seed);
-  std::normal_distribution<float> nIr(0, s.noiseIr), nRed(0, s.noiseRed), jitter(0, 0.03f);
+  SimFinger finger(s, seed);
   HeartRateDetector hr; hr.reset();
   Spo2Estimator sp; sp.reset();
   Out o;
-
-  std::vector<float> beats;
-  float nextBeat = 0, onSince = 0;
-  bool wasOff = false;
-  for (int i = 0; i < (int)(s.seconds * FS_HZ); i++) {
-    float t = i / FS_HZ;
-    bool off = (t >= s.fingerOffFrom && t < s.fingerOffTo);
-    float rawIr, rawRed;
-    float rTrue = (s.rEnd < 0) ? s.rStart : s.rStart + (s.rEnd - s.rStart) * t / s.seconds;
-    o.trueREnd = rTrue;
-
-    if (off) {
-      rawIr = 150 + nIr(rng);
-      rawRed = 120 + nRed(rng);
-      wasOff = true;
-    } else {
-      if (wasOff) { onSince = t; wasOff = false; }
-      while (nextBeat <= t) { beats.push_back(nextBeat); nextBeat += 60.0f / s.bpm * (1 + jitter(rng)); }
-      float v = 0;
-      for (size_t k = beats.size() >= 3 ? beats.size() - 3 : 0; k < beats.size(); k++) v += pulseShape(t - beats[k]);
-      float breath = 1 + s.breathing * sinf(2 * 3.14159f * 0.25f * t);
-      float on = t - onSince;
-      float ramp = on < 0.3f ? on / 0.3f : 1.0f;  // placing the finger
-      float bump = (s.bumpAt >= 0 && t > s.bumpAt && t < s.bumpAt + 0.15f) ? 1 + 0.1f * sinf(3.14159f * (t - s.bumpAt) / 0.15f) : 1;
-      rawIr  = 150 + ramp * (s.dcIr  * breath * bump * (1 - s.piIr * v) - 150) + nIr(rng);
-      rawRed = 120 + ramp * (s.dcRed * breath * bump * (1 - s.piIr * rTrue * v) - 120) + nRed(rng);
-      if (rawRed > 65535) rawRed = 65535;  // ADC limit
-      if (rawIr > 65535) rawIr = 65535;
-    }
-
+  float rawIr, rawRed;
+  while (finger.next(rawIr, rawRed)) {
+    float t = finger.t();
+    o.trueREnd = finger.trueR();
     HrResult h = hr.process(rawIr);
     Spo2Result r = sp.process(rawIr, rawRed, h);
     if (r.beatDone) o.beatsDone++;
     if (r.beatValid) o.validBeats++;
     if (r.spo2 > 0 && o.firstSpo2Sec < 0) o.firstSpo2Sec = t;
-    if (off && t + 1.0f / FS_HZ >= s.fingerOffTo) o.spo2AtOffEnd = r.spo2;
+    if (finger.fingerOff() && t + 0.01f >= s.fingerOffTo) o.spo2AtOffEnd = r.spo2;
     o.spo2 = r.spo2; o.r = r.r; o.pi = r.pi;
   }
   return o;

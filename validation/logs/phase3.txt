@@ -1,0 +1,195 @@
+  (raw IR 347, raw red 166)
+
+Finger detected. Hold still...
+  (raw IR 45955, raw red 34905)
+Measuring.
+Beat  750 ms ok  BPM   0.0 | this beat R 0.481 PI 1.16% | SpO2 --
+  (raw IR 45251, raw red 34428)
+Beat  780 ms ok  BPM   0.0 | this beat R 0.498 PI 0.81% | SpO2 --
+Beat  790 ms ok  BPM  77.6 | this beat R 0.478 PI 1.23% | SpO2 --
+  (raw IR 45052, raw red 34241)
+Beat  830 ms ok  BPM  76.2 | this beat R 0.478 PI 1.29% | R 0.480 SpO2  98.0% PI 1.19%
+Beat  880 ms ok  BPM  74.4 | this beat R 0.445 PI 1.81% | R 0.478 SpO2  98.0% PI 1.23%
+  (raw IR 44407, raw red 33943)
+Beat  950 ms ok  BPM  72.3 | this beat R 0.443 PI 1.91% | R 0.478 SpO2  98.0% PI 1.26%
+Beat  920 ms ok  BPM  71.2 | this beat R 0.457 PI 2.44% | R 0.478 SpO2  98.1% PI 1.29%
+Beat  890 ms ok  BPM  70.7 | this beat R 0.450 PI 2.39% | R 0.467 SpO2  98.3% PI 1.55%
+  (raw IR 42434, raw red 33263)
+Beat  890 ms ok  BPM  69.3 | this beat R 0.412 PI 3.01% | R 0.454 SpO2  98.7% PI 1.86%
+Beat  920 ms ok  BPM  67.9 | this beat R 0.444 PI 3.08% | R 0.448 SpO2  98.8% PI 2.15%
+  (raw IR 42001, raw red 33191)
+Beat  960 ms ok  BPM  66.3 | this beat R 0.369 PI 3.70% | R 0.444 SpO2  98.9% PI 2.42%
+Beat  980 ms ok  BPM  65.0 | this beat R 0.490 PI 3.15% | R 0.444 SpO2  98.9% PI 2.73%
+  (raw IR 41378, raw red 32955)
+Beat  840 ms ok  BPM  65.3 | this beat R 0.457 PI 3.69% | R 0.447 SpO2  98.8% PI 3.05%
+Beat  790 ms ok  BPM  66.8 | this beat R 0.428 PI 4.97% | R 0.447 SpO2  98.8% PI 3.12%
+  (raw IR 41970, raw red 33148)
+Beat  890 ms ok  BPM  67.0 | this beat R 0.432 PI 3.24% | R 0.438 SpO2  99.1% PI 3.19%
+Beat  840 ms ok  BPM  67.5 | this beat R 0.457 PI 3.59% | R 0.438 SpO2  99.1% PI 3.42%
+Beat  820 ms ok  BPM  68.2 | this beat R 0.460 PI 2.31% | R 0.450 SpO2  98.7% PI 3.42%
+  (raw IR 42852, raw red 33373)
+Beat 1570 ms rej BPM  68.2 | this beat skipped         | R 0.450 SpO2  98.7% PI 3.42%
+  (raw IR 43886, raw red 33562)
+Beat  770 ms ok  BPM  69.7 | this beat R 0.456 PI 0.90% | R 0.457 SpO2  98.6% PI 3.42%
+Beat  790 ms ok  BPM  71.4 | this beat R 0.489 PI 0.72% | R 0.457 SpO2  98.6% PI 3.19%
+Beat  800 ms ok  BPM  73.4 | this beat R 0.451 PI 0.82% | R 0.457 SpO2  98.6% PI 2.77%
+  (raw IR 43707, raw red 33367)
+Beat  780 ms ok  BPM  74.1 | this beat R 0.421 PI 1.00% | R 0.454 SpO2  98.7% PI 1.65%
+Beat  780 ms ok  BPM  74.2 | this beat R 0.475 PI 1.07% | R 0.457 SpO2  98.6% PI 1.04%
+  (raw IR 43357, raw red 33194)
+Beat  800 ms ok  BPM  75.2 | this beat R 0.444 PI 1.50% | R 0.457 SpO2  98.6% PI 1.04%
+Beat  790 ms ok  BPM  75.8 | this beat R 0.463 PI 1.99% | R 0.458 SpO2  98.5% PI 1.04%
+Beat  770 ms ok  BPM  76.4 | this beat R 0.462 PI 1.70% | R 0.459 SpO2  98.5% PI 1.04%
+  (raw IR 41987, raw red 32851)
+Beat  810 ms ok  BPM  75.9 | this beat R 0.444 PI 2.26% | R 0.456 SpO2  98.6% PI 1.29%
+Beat  790 ms ok  BPM  75.9 | this beat R 0.434 PI 3.42% | R 0.447 SpO2  98.8% PI 1.60%
+  (raw IR 41694, raw red 32850)
+Beat  830 ms ok  BPM  75.6 | this beat R 0.479 PI 2.49% | R 0.453 SpO2  98.7% PI 1.84%
+Beat  840 ms ok  BPM  74.9 | this beat R 0.458 PI 3.21% | R 0.460 SpO2  98.5% PI 2.12%
+Beat  800 ms ok  BPM  74.7 | this beat R 0.480 PI 3.46% | R 0.460 SpO2  98.5% PI 2.38%
+  (raw IR 40777, raw red 32514)
+Beat  810 ms ok  BPM  74.5 | this beat R 0.474 PI 2.57% | R 0.462 SpO2  98.4% PI 2.53%
+Beat  840 ms ok  BPM  74.0 | this beat R 0.457 PI 2.87% | R 0.460 SpO2  98.5% PI 2.72%
+  (raw IR 41133, raw red 32630)
+Beat  850 ms ok  BPM  73.1 | this beat R 0.466 PI 2.98% | R 0.462 SpO2  98.4% PI 2.92%
+Beat  820 ms ok  BPM  72.9 | this beat R 0.469 PI 2.85% | R 0.467 SpO2  98.3% PI 2.92%
+Beat  790 ms ok  BPM  72.9 | this beat R 0.454 PI 2.74% | R 0.467 SpO2  98.3% PI 2.86%
+  (raw IR 40083, raw red 32198)
+Beat  800 ms ok  BPM  73.3 | this beat R 0.490 PI 2.93% | R 0.467 SpO2  98.3% PI 2.90%
+Beat  900 ms ok  BPM  72.6 | this beat R 0.485 PI 3.29% | R 0.471 SpO2  98.2% PI 2.90%
+  (raw IR 40085, raw red 32135)
+Beat  910 ms ok  BPM  71.4 | this beat R 0.476 PI 3.47% | R 0.471 SpO2  98.2% PI 2.90%
+Beat  910 ms ok  BPM  70.4 | this beat R 0.482 PI 3.63% | R 0.473 SpO2  98.2% PI 2.95%
+  (raw IR 40358, raw red 32227)
+Beat  880 ms ok  BPM  70.0 | this beat R 0.479 PI 3.50% | R 0.478 SpO2  98.1% PI 3.13%
+Beat  860 ms ok  BPM  69.9 | this beat R 0.498 PI 3.12% | R 0.480 SpO2  98.0% PI 3.21%
+  (raw IR 40837, raw red 32186)
+Beat  960 ms ok  BPM  68.5 | this beat R 0.500 PI 3.31% | R 0.483 SpO2  97.9% PI 3.30%
+Beat  940 ms ok  BPM  67.0 | this beat R 0.455 PI 3.93% | R 0.483 SpO2  97.9% PI 3.39%
+  (raw IR 39293, raw red 31720)
+Beat  900 ms ok  BPM  66.1 | this beat R 0.492 PI 3.56% | R 0.483 SpO2  97.9% PI 3.49%
+Beat  880 ms ok  BPM  66.3 | this beat R 0.489 PI 3.29% | R 0.485 SpO2  97.9% PI 3.49%
+Beat  940 ms ok  BPM  66.0 | this beat R 0.495 PI 3.32% | R 0.490 SpO2  97.7% PI 3.41%
+  (raw IR 39646, raw red 31816)
+Beat  960 ms ok  BPM  65.6 | this beat R 0.485 PI 3.85% | R 0.490 SpO2  97.7% PI 3.41%
+Beat  920 ms ok  BPM  65.2 | this beat R 0.502 PI 3.48% | R 0.493 SpO2  97.7% PI 3.40%
+  (raw IR 39624, raw red 31823)
+Beat  830 ms ok  BPM  65.5 | this beat R 0.477 PI 4.24% | R 0.490 SpO2  97.7% PI 3.52%
+Beat  810 ms ok  BPM  66.9 | this beat R 0.483 PI 2.94% | R 0.487 SpO2  97.8% PI 3.52%
+  (raw IR 40079, raw red 31958)
+Beat  870 ms ok  BPM  67.5 | this beat R 0.476 PI 3.44% | R 0.487 SpO2  97.8% PI 3.46%
+Beat  860 ms ok  BPM  67.9 | this beat R 0.482 PI 3.67% | R 0.484 SpO2  97.9% PI 3.46%
+Beat  860 ms ok  BPM  68.1 | this beat R 0.477 PI 3.36% | R 0.483 SpO2  97.9% PI 3.46%
+  (raw IR 38556, raw red 31400)
+Beat  840 ms ok  BPM  69.1 | this beat R 0.483 PI 3.43% | R 0.482 SpO2  97.9% PI 3.46%
+Beat  850 ms ok  BPM  70.2 | this beat R 0.503 PI 2.99% | R 0.482 SpO2  97.9% PI 3.44%
+  (raw IR 38809, raw red 31481)
+Beat  880 ms ok  BPM  70.6 | this beat R 0.475 PI 3.53% | R 0.479 SpO2  98.0% PI 3.44%
+Beat  870 ms ok  BPM  70.2 | this beat R 0.484 PI 3.65% | R 0.482 SpO2  97.9% PI 3.44%
+  (raw IR 39346, raw red 31706)
+Beat  840 ms ok  BPM  69.9 | this beat R 0.473 PI 3.33% | R 0.479 SpO2  98.0% PI 3.44%
+Beat  880 ms ok  BPM  69.8 | this beat R 0.483 PI 3.40% | R 0.482 SpO2  97.9% PI 3.41%
+  (raw IR 38300, raw red 31265)
+Beat  900 ms ok  BPM  69.4 | this beat R 0.487 PI 3.74% | R 0.483 SpO2  97.9% PI 3.41%
+Beat  880 ms ok  BPM  69.2 | this beat R 0.479 PI 3.70% | R 0.483 SpO2  97.9% PI 3.48%
+Beat  840 ms ok  BPM  69.2 | this beat R 0.481 PI 3.54% | R 0.482 SpO2  97.9% PI 3.54%
+  (raw IR 39033, raw red 31546)
+Beat  850 ms ok  BPM  69.2 | this beat R 0.494 PI 3.39% | R 0.482 SpO2  97.9% PI 3.54%
+Beat  890 ms ok  BPM  69.1 | this beat R 0.491 PI 3.85% | R 0.484 SpO2  97.9% PI 3.60%
+  (raw IR 38997, raw red 31484)
+Beat  880 ms ok  BPM  69.0 | this beat R 0.499 PI 4.13% | R 0.485 SpO2  97.9% PI 3.62%
+Beat  840 ms ok  BPM  69.0 | this beat R 0.491 PI 3.51% | R 0.489 SpO2  97.8% PI 3.62%
+  (raw IR 37996, raw red 31025)
+Beat  810 ms ok  BPM  69.7 | this beat R 0.510 PI 3.43% | R 0.491 SpO2  97.7% PI 3.62%
+Beat  900 ms ok  BPM  69.7 | this beat R 0.498 PI 3.97% | R 0.493 SpO2  97.7% PI 3.62%
+Beat  830 ms ok  BPM  70.2 | this beat R 0.502 PI 4.12% | R 0.496 SpO2  97.6% PI 3.70%
+  (raw IR 38684, raw red 31265)
+Beat  820 ms ok  BPM  70.4 | this beat R 0.509 PI 3.60% | R 0.498 SpO2  97.5% PI 3.73%
+Beat  800 ms ok  BPM  70.9 | this beat R 0.507 PI 3.52% | R 0.500 SpO2  97.5% PI 3.73%
+  (raw IR 38954, raw red 31351)
+Beat  870 ms ok  BPM  71.1 | this beat R 0.529 PI 3.44% | R 0.504 SpO2  97.4% PI 3.56%
+Beat  870 ms ok  BPM  71.2 | this beat R 0.506 PI 4.12% | R 0.506 SpO2  97.3% PI 3.56%
+  (raw IR 37477, raw red 30776)
+Beat  860 ms ok  BPM  71.0 | this beat R 0.512 PI 3.85% | R 0.508 SpO2  97.3% PI 3.73%
+Beat  860 ms ok  BPM  70.5 | this beat R 0.506 PI 3.94% | R 0.506 SpO2  97.3% PI 3.90%
+Beat  860 ms ok  BPM  70.9 | this beat R 0.534 PI 3.58% | R 0.508 SpO2  97.3% PI 3.73%
+  (raw IR 38390, raw red 31152)
+Beat  820 ms ok  BPM  71.0 | this beat R 0.488 PI 3.63% | R 0.508 SpO2  97.3% PI 3.62%
+Beat  880 ms ok  BPM  70.4 | this beat R 0.526 PI 3.91% | R 0.509 SpO2  97.3% PI 3.74%
+  (raw IR 38609, raw red 31291)
+Beat  880 ms ok  BPM  69.6 | this beat R 0.503 PI 3.86% | R 0.509 SpO2  97.3% PI 3.86%
+Beat  860 ms ok  BPM  69.7 | this beat R 0.499 PI 3.78% | R 0.506 SpO2  97.4% PI 3.86%
+  (raw IR 37118, raw red 30696)
+Beat  820 ms ok  BPM  70.2 | this beat R 0.492 PI 3.51% | R 0.504 SpO2  97.4% PI 3.82%
+Beat  890 ms ok  BPM  69.9 | this beat R 0.499 PI 3.68% | R 0.501 SpO2  97.5% PI 3.73%
+Beat  910 ms ok  BPM  69.4 | this beat R 0.493 PI 4.05% | R 0.499 SpO2  97.5% PI 3.73%
+  (raw IR 37920, raw red 31039)
+Beat  880 ms ok  BPM  69.2 | this beat R 0.506 PI 3.94% | R 0.499 SpO2  97.5% PI 3.82%
+Beat  910 ms ok  BPM  68.3 | this beat R 0.501 PI 3.84% | R 0.500 SpO2  97.5% PI 3.85%
+  (raw IR 37975, raw red 30993)
+Beat  870 ms ok  BPM  68.4 | this beat R 0.512 PI 3.87% | R 0.500 SpO2  97.5% PI 3.85%
+Beat  870 ms ok  BPM  68.5 | this beat R 0.486 PI 3.53% | R 0.499 SpO2  97.5% PI 3.81%
+  (raw IR 38634, raw red 31283)
+Beat  900 ms ok  BPM  68.1 | this beat R 0.508 PI 4.11% | R 0.500 SpO2  97.5% PI 3.86%
+Beat  900 ms ok  BPM  67.3 | this beat R 0.496 PI 4.11% | R 0.500 SpO2  97.5% PI 3.90%
+  (raw IR 37208, raw red 30642)
+Beat  860 ms ok  BPM  67.6 | this beat R 0.509 PI 3.97% | R 0.503 SpO2  97.4% PI 3.95%
+Beat  830 ms ok  BPM  68.4 | this beat R 0.502 PI 3.71% | R 0.504 SpO2  97.4% PI 3.90%
+Beat  900 ms ok  BPM  68.2 | this beat R 0.510 PI 3.92% | R 0.505 SpO2  97.4% PI 3.90%
+  (raw IR 37935, raw red 30920)
+Beat  900 ms ok  BPM  68.3 | this beat R 0.510 PI 4.26% | R 0.509 SpO2  97.3% PI 3.95%
+Beat  830 ms ok  BPM  68.7 | this beat R 0.518 PI 3.99% | R 0.509 SpO2  97.3% PI 3.98%
+  (raw IR 38398, raw red 31059)
+Beat  810 ms ok  BPM  69.3 | this beat R 0.516 PI 3.75% | R 0.510 SpO2  97.3% PI 3.98%
+Beat  840 ms ok  BPM  69.9 | this beat R 0.526 PI 3.76% | R 0.510 SpO2  97.2% PI 3.95%
+  (raw IR 37053, raw red 30454)
+Beat  900 ms ok  BPM  69.9 | this beat R 0.517 PI 3.97% | R 0.513 SpO2  97.2% PI 3.95%
+Beat  880 ms ok  BPM  69.7 | this beat R 0.531 PI 3.95% | R 0.517 SpO2  97.1% PI 3.93%
+Beat  830 ms ok  BPM  69.7 | this beat R 0.526 PI 3.74% | R 0.518 SpO2  97.1% PI 3.93%
+  (raw IR 37803, raw red 30767)
+Beat  890 ms ok  BPM  69.8 | this beat R 0.514 PI 3.84% | R 0.518 SpO2  97.1% PI 3.89%
+Beat  900 ms ok  BPM  69.8 | this beat R 0.512 PI 4.28% | R 0.518 SpO2  97.1% PI 3.89%
+  (raw IR 38005, raw red 30905)
+Beat  860 ms ok  BPM  69.5 | this beat R 0.521 PI 3.99% | R 0.519 SpO2  97.0% PI 3.89%
+Beat  840 ms ok  BPM  69.2 | this beat R 0.512 PI 3.77% | R 0.519 SpO2  97.0% PI 3.89%
+  (raw IR 38435, raw red 31104)
+Beat  890 ms ok  BPM  68.7 | this beat R 0.500 PI 4.20% | R 0.515 SpO2  97.1% PI 3.96%
+Beat  900 ms ok  BPM  68.7 | this beat R 0.497 PI 4.21% | R 0.513 SpO2  97.2% PI 3.97%
+Beat  870 ms ok  BPM  68.8 | this beat R 0.520 PI 3.85% | R 0.513 SpO2  97.2% PI 3.92%
+  (raw IR 37109, raw red 30586)
+Beat  850 ms ok  BPM  68.6 | this beat R 0.504 PI 3.74% | R 0.512 SpO2  97.2% PI 3.92%
+Beat  910 ms ok  BPM  68.4 | this beat R 0.519 PI 3.80% | R 0.512 SpO2  97.2% PI 3.92%
+  (raw IR 37329, raw red 30685)
+Beat  860 ms ok  BPM  68.8 | this beat R 0.507 PI 3.93% | R 0.510 SpO2  97.3% PI 3.89%
+Beat  800 ms ok  BPM  69.4 | this beat R 0.507 PI 3.71% | R 0.507 SpO2  97.3% PI 3.82%
+  (raw IR 38116, raw red 31012)
+Beat  850 ms ok  BPM  69.3 | this beat R 0.516 PI 3.58% | R 0.507 SpO2  97.3% PI 3.82%
+Beat  870 ms ok  BPM  69.5 | this beat R 0.504 PI 4.19% | R 0.507 SpO2  97.3% PI 3.82%
+Beat  830 ms ok  BPM  70.2 | this beat R 0.514 PI 3.75% | R 0.511 SpO2  97.2% PI 3.78%
+  (raw IR 36958, raw red 30539)
+Beat  820 ms ok  BPM  70.7 | this beat R 0.506 PI 3.70% | R 0.507 SpO2  97.3% PI 3.75%
+Beat  860 ms ok  BPM  70.6 | this beat R 0.508 PI 3.79% | R 0.508 SpO2  97.3% PI 3.77%
+  (raw IR 37396, raw red 30693)
+Beat  870 ms ok  BPM  71.0 | this beat R 0.512 PI 3.96% | R 0.508 SpO2  97.3% PI 3.77%
+Beat  880 ms ok  BPM  70.8 | this beat R 0.519 PI 3.95% | R 0.510 SpO2  97.2% PI 3.77%
+  (raw IR 37975, raw red 30937)
+Beat  870 ms ok  BPM  70.1 | this beat R 0.519 PI 4.03% | R 0.513 SpO2  97.2% PI 3.87%
+Beat  840 ms ok  BPM  70.2 | this beat R 0.520 PI 3.70% | R 0.513 SpO2  97.2% PI 3.87%
+Beat  880 ms ok  BPM  70.1 | this beat R 0.518 PI 3.63% | R 0.516 SpO2  97.1% PI 3.77%
+  (raw IR 36721, raw red 30429)
+Beat  920 ms ok  BPM  69.2 | this beat R 0.500 PI 4.15% | R 0.515 SpO2  97.1% PI 3.87%
+Beat  890 ms ok  BPM  68.5 | this beat R 0.503 PI 4.28% | R 0.515 SpO2  97.1% PI 3.95%
+  (raw IR 37323, raw red 30652)
+Beat  860 ms ok  BPM  68.5 | this beat R 0.506 PI 3.87% | R 0.515 SpO2  97.1% PI 3.95%
+Beat  830 ms ok  BPM  68.9 | this beat R 0.501 PI 3.84% | R 0.512 SpO2  97.2% PI 3.91%
+  (raw IR 37664, raw red 30845)
+Beat  900 ms ok  BPM  68.7 | this beat R 0.507 PI 4.13% | R 0.506 SpO2  97.3% PI 3.95%
+Beat  900 ms ok  BPM  68.4 | this beat R 0.514 PI 4.33% | R 0.506 SpO2  97.3% PI 4.00%
+  (raw IR 37870, raw red 30883)
+Beat  860 ms ok  BPM  68.2 | this beat R 0.510 PI 4.02% | R 0.506 SpO2  97.3% PI 4.08%
+Beat  920 ms ok  BPM  67.8 | this beat R 0.524 PI 3.75% | R 0.506 SpO2  97.3% PI 4.08%
+Beat  930 ms ok  BPM  67.7 | this beat R 0.515 PI 4.38% | R 0.509 SpO2  97.3% PI 4.08%
+  (raw IR 36523, raw red 30338)
+Beat  880 ms ok  BPM  67.8 | this beat R 0.513 PI 4.20% | R 0.512 SpO2  97.2% PI 4.08%
+Beat  870 ms ok  BPM  67.7 | this beat R 0.509 PI 3.81% | R 0.512 SpO2  97.2% PI 4.08%
+  (raw IR 37122, raw red 30556)

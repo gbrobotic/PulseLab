@@ -1,7 +1,7 @@
 // Tests the Phase 2 beat detector on a simulated PPG signal, on a PC.
 //
 // Build and run (needs g++):
-//   g++ -std=c++17 -O2 -I firmware/02_heart_rate tests/test_heart_rate.cpp -o test_hr
+//   g++ -std=c++17 -O2 -I firmware/04_display tests/test_heart_rate.cpp -o test_hr
 //   ./test_hr
 //
 // The fake signal has: a DC level, breathing drift, systolic + dicrotic pulse

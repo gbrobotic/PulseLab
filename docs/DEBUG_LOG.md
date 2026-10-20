@@ -101,3 +101,35 @@ Uploaded fine, but no output at all, not even zeros or "MAX30100 not found". Pha
 Cause: Tools > USB CDC On Boot was set to Disabled for the new sketch. On the ESP32-C3 that sends `Serial` to the UART pins (GPIO20/21) instead of USB, so the IDE gets nothing. Setting it to Enabled fixed it.
 
 So I don't have to guess next time, the sketch now flashes the onboard LED (GPIO8) on every heartbeat. If the LED flashes but Serial is empty, the code is running and it's a Serial setting.
+
+## 8. Sensor library stops reading if its FIFO is ever full
+
+20 Oct 2026, Phase 4 (found by reading the library code, before it happened)
+
+Before adding the OLED I checked how MAX30100lib reads the sensor. It calculates the number of samples waiting as `(write pointer - read pointer) & 15`. The FIFO holds 16 samples. If it's completely full, the two pointers are equal, the result is 0, and it never reads again, so the data would just stop.
+
+At 100 Hz the FIFO is full after 160 ms. The OLED update uses the same I2C bus and takes time, and Serial printing can block for ~100 ms per line if USB is connected but no Serial Monitor is open.
+
+What I did in Phase 4:
+- OLED redrawn at 10 fps and the frame time is measured and printed
+- watchdog: no samples for 300 ms -> `resetFifo()` and restart the measurement, with a counter in the status line
+- `Serial.setTxTimeoutMs(0)` so printing never waits
+
+## 9. Wave flat after moving the finger
+
+20 Oct 2026, Phase 4
+
+After moving my finger, the Wave screen showed the movement spike and then an almost flat line for several seconds. The wave was auto-scaled to the biggest value in the last 5 s, and the spike was much bigger than a pulse.
+
+Fix: the wave now remembers which points were recorded during "Hold still" / settling / "Too bright". Those still get drawn but don't set the scale, and are clipped to the edges. The scale also shrinks smoothly instead of jumping. Before/after renders are in `phase4_display.md`.
+
+## 10. OLED looks like it flickers
+
+20 Oct 2026, Phase 4
+
+The screen seemed to flicker a bit, in the videos and in person. Two different things:
+
+- In the first videos, every 6th frame had horizontal strips missing. That's the phone camera catching the OLED's row-by-row refresh, not the display.
+- In a second video I measured the screen brightness in all 1,212 frames: the change at 10 Hz (the update rate) was 0.08%, so the brightness doesn't flicker. What looks like flicker is the wave moving in 2-3 pixel jumps 10 times a second (new wave point every 40 ms, screen redrawn every 100 ms).
+
+Fix: redraw at 25 fps, one frame per new wave point so it scrolls 1 pixel at a time. To make that fit, only the pages of the screen that changed are sent (a full redraw takes 33 ms). Details in `phase4_display.md`.

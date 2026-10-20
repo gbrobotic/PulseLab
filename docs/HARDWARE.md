@@ -6,12 +6,12 @@
 |---|---|---|
 | 1 | ESP32-C3 Super Mini | |
 | 1 | MAX30100 module (green) | removed its pull-up resistors, see debug log |
-| 1 | 1.3" OLED, I2C, 4 pin | SH1106 driver, address 0x3C |
+| 1 | 1.3" OLED, I2C, 4 pin | SH1106 driver, address 0x3C (U8G2_SH1106_128X64_NONAME_F_HW_I2C) |
 | 2 | 4.7k resistor | I2C pull-ups to 3.3V |
 | 1 | 3.7V Li-Po (~500mAh) | later |
 | 1 | TP4056 charger with protection | later |
 | 1 | slide switch | later |
-| 1 | push button | later |
+| 1 | push button | GPIO4 to GND |
 | 1 | vibration motor + NPN transistor + 1k + 1N4148 | later |
 | 2 | 100k resistor | battery voltage divider, later |
 | - | zero PCB, female headers, wires | |
@@ -28,21 +28,23 @@
 
 I'm not using GPIO 8 and 9 even though some pinout diagrams mark them as SDA/SCL. GPIO8 has the onboard LED and GPIO9 is the BOOT button, and both affect how the board boots. On the C3 any GPIO can be used for I2C, so I set the pins in code with `Wire.begin(6, 7)`.
 
-## Wiring (current, Phase 1)
+## Wiring (current, Phase 4)
 
 ```
 MAX30100  VIN -> 3.3V   GND -> G   SDA -> GPIO6   SCL -> GPIO7
 OLED      VCC -> 3.3V   GND -> G   SDA -> GPIO6   SCL -> GPIO7
 4.7k      GPIO6 -> 3.3V
 4.7k      GPIO7 -> 3.3V
+Button    GPIO4 -> button -> GND   (internal pull-up, no resistor)
 ```
+
+The onboard blue LED (GPIO8) flashes on every heartbeat. It's a boot pin, but driving the onboard LED after start-up is fine.
 
 Everything runs on 3.3V, not 5V.
 
 ## Wiring (planned, later phases)
 
 ```
-Button    GPIO4 -> button -> GND (internal pull-up)
 Motor     GPIO10 -> 1k -> NPN base, emitter -> GND, collector -> motor -, motor + -> 3.3V
           1N4148 across the motor
 Battery   BAT+ -> 100k -> GPIO3 -> 100k -> GND
