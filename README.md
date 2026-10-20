@@ -53,7 +53,7 @@ hardware/      perfboard layout and photos (later)
 - [x] Phase 5: HRV and stress level
 - [x] Phase 6: breathing rate
 - [x] Phase 7: guided breathing mode
-- [ ] Phase 8: BLE + web dashboard
+- [x] Phase 8: BLE + web dashboard
 - [ ] Phase 9: battery
 - [ ] Phase 10: zero PCB and 3D case
 - [ ] Phase 11: accuracy test vs commercial oximeter
@@ -68,7 +68,7 @@ Notes per phase:
 - [Phase 5: HRV and stress level](docs/phase5_hrv.md)
 - [Phase 6: breathing rate](docs/phase6_breathing.md)
 - [Phase 7: guided breathing](docs/phase7_guided.md)
-- [Phase 8: Bluetooth and web dashboard](docs/phase8_ble.md) (works from the phone; laptop connection still open)
+- [Phase 8: Bluetooth and web dashboard](docs/phase8_ble.md) (works from an Android phone; one laptop doesn't connect yet, see the notes)
 
 Live dashboard (Chrome/Edge, needs the board, or press Demo): `dashboard/` - see [dashboard/README.md](dashboard/README.md)
 

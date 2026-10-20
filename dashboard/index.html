@@ -87,6 +87,8 @@
     (iPhone browsers don't support Web Bluetooth.) The <b>Demo</b> button works everywhere.
   </div>
 
+  <div id="connError" class="notice" hidden></div>
+
   <section class="tiles">
     <div class="card tile">
       <div class="label"><span id="heart" class="heart">&#9829;</span> Heart rate</div>
@@ -300,14 +302,36 @@ $("connect").onclick = async () => {
   try {
     dev = new PulseLab.PulseLabDevice(handlers);
     $("status").textContent = "connecting...";
+    $("connError").hidden = true;
     setStatus(true, await dev.connect());
   } catch (e) {
     dev = null;
     setStatus(false);
-    $("status").textContent = e.name === "NotFoundError" ? "no device chosen" : "could not connect";
+    $("status").textContent = "not connected";
+    showConnectError(e);
     console.warn(e);
   }
 };
+
+// Say what went wrong, with what to try (the browser's own message is shown too).
+function showConnectError(e) {
+  const msg = `${e.name}: ${e.message}`;
+  let help;
+  if (/adapter not available|Bluetooth adapter/i.test(e.message)) {
+    help = "Chrome can't use Bluetooth on this computer. Switch Bluetooth on (Windows: Settings > Bluetooth & devices). The computer needs Bluetooth 4.0 / BLE.";
+  } else if (e.name === "NotFoundError") {
+    help = "No device was chosen. If PulseLab wasn't in the list: it can only be connected to one phone or computer at a time, so close this page on the other device, wait a few seconds and try again.";
+  } else if (e.name === "SecurityError") {
+    help = "Bluetooth only works on an https:// or http://localhost address, not on a file opened by double-clicking.";
+  } else if (e.name === "NetworkError" || /GATT|connect/i.test(e.message)) {
+    help = "PulseLab was found but the connection failed. Close the page on any other device, and if PulseLab is paired in the Windows / Android Bluetooth settings, remove it there (the page connects by itself). Then reset the board and try again.";
+  } else {
+    help = "Try again after resetting the board. If it keeps failing, the message above helps to search for the cause.";
+  }
+  const box = $("connError");
+  box.innerHTML = `<b>Could not connect.</b> ${help}<br><span class="muted">Browser said: ${msg.replace(/</g, "&lt;")}</span>`;
+  box.hidden = false;
+}
 $("demo").onclick = async () => {
   $("unsupported").hidden = true;
   dev = new PulseLab.DemoDevice(handlers);
@@ -334,6 +358,15 @@ $("csv").onclick = () => {
   a.click();
 };
 if (!PulseLab.PulseLabDevice.supported()) $("unsupported").hidden = false;
+else if (navigator.bluetooth.getAvailability) {
+  // Chrome supports Web Bluetooth here, but is there a Bluetooth adapter that's switched on?
+  navigator.bluetooth.getAvailability().then((ok) => {
+    if (!ok) {
+      $("connError").innerHTML = "<b>No Bluetooth found.</b> Chrome can't find a Bluetooth adapter on this computer, or it's switched off. Switch Bluetooth on, or use an Android phone. (Demo still works.)";
+      $("connError").hidden = false;
+    }
+  }).catch(() => {});
+}
 
 // ---------- drawing ----------
 function setupCanvas(c) {

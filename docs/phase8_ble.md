@@ -146,3 +146,5 @@ The page connected from the phone but not from the laptop. Not solved yet; thing
 4. The laptop needs **Bluetooth 4.0 (BLE)** and Bluetooth switched on. `chrome://bluetooth-internals` shows if Chrome can see the adapter and lists nearby devices.
 5. Mac: System Settings > Privacy > Bluetooth must allow Chrome.
 
+To find out which one it is, the page now says what went wrong instead of just "could not connect": it shows the browser's own error with a hint (no adapter / Bluetooth off, no device chosen, connection failed), and on load it checks if Chrome can use a Bluetooth adapter at all (`navigator.bluetooth.getAvailability()`). It also looks for the device by name prefix and by the heart rate service, and tries the connection a second time if the first one fails (that sometimes happens on Windows). Checked in headless Chrome with a fake Bluetooth object for each error.
+

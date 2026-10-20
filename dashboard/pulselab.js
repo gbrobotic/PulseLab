@@ -104,11 +104,16 @@
 
     async connect() {
       this.device = await navigator.bluetooth.requestDevice({
-        filters: [{ name: "PulseLab" }, { services: [UUID.hrService] }],
+        // by name, or by the heart rate service in the advertisement (some
+        // computers only see the name after an extra scan request)
+        filters: [{ name: "PulseLab" }, { namePrefix: "Pulse" }, { services: [UUID.hrService] }],
         optionalServices: [UUID.service, UUID.hrService],
       });
       this.device.addEventListener("gattserverdisconnected", () => this.h.onDisconnect && this.h.onDisconnect());
-      const server = await this.device.gatt.connect();
+      // the first connect sometimes fails on Windows; try a second time
+      let server;
+      try { server = await this.device.gatt.connect(); }
+      catch (e) { await new Promise((r) => setTimeout(r, 800)); server = await this.device.gatt.connect(); }
       const hrs = await server.getPrimaryService(UUID.hrService);
       const pl = await server.getPrimaryService(UUID.service);
       await this.listen(hrs, UUID.hrMeasurement, (dv) => this.h.onHeartRate && this.h.onHeartRate(decodeHeartRate(dv)));
