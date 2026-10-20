@@ -169,3 +169,27 @@ The Serial log now prints the slope height of each beat (`h 245`) and a line for
 Lesson: the simulator's second bump came 260 ms after the beat, always inside the 300 ms block, so this case was never tested. Real logs showed it from the start (306/617/318 ms in the first lines of `hrv_slow.txt`); I should have looked at them more carefully.
 
 Checked on the device afterwards (`hrv_sit2.txt`, `hrv_slow2.txt`): no jumps to double in 5 minutes of recording, BPM 65-94.
+
+## 13. Raw recording saved 0 lines
+
+20 Oct 2026, Phase 6
+
+First try of the raw recording mode: `capture_serial.py` opened COM9 without an error, ran for 150 s and saved 0 lines. Not even the `#` lines came through, so it wasn't the data format.
+
+Same symptom as #7. Most likely cause: the new sketch `06_breathing` was compiled with Tools > USB CDC On Boot = Disabled, so `Serial` went to GPIO20/21 instead of USB. (I checked the ESP32 core's USB code too: when the PC is slow it can drop some bytes, but it never stops completely.)
+
+So that it can't happen silently a third time:
+- the sketch now stops compiling with a clear `#error` if Serial is used and USB CDC On Boot is Disabled (tested both settings with arduino-cli)
+- `capture_serial.py` says after 5 s if nothing is arriving, with what to check, instead of waiting the whole time
+
+## 14. Breathing rate "agreed" on pure noise
+
+20 Oct 2026, Phase 6
+
+The breathing rate is only shown when the 3 breathing effects (beat timing, pulse height, baseline) agree. On my paced recordings it was always right. But a simulator test with no breathing at all, just random beat-to-beat noise, still showed a rate 62% of the time.
+
+Looking at which ones agreed: always height and baseline. The baseline is the average IR over each beat, and a deeper pulse lowers that average, so the two are partly the same measurement and agree with each other on noise.
+
+Fix: the timing effect has to be one of the agreeing ones (or all 3 agree), and at least 30% of the combined power has to be near the peak. Pure noise: 62% -> 20% shown. Real recordings: 80% -> 75% shown, still all right. Details in `phase6_breathing.md`, step 4.
+
+Lesson: "two methods agree" only means something if they don't share the same error. I only found this because I wrote a test for the case where the answer should be "I don't know".

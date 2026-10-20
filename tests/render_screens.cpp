@@ -148,13 +148,32 @@ int main(int argc, char** argv) {
   { UiData u = base; u.screen = Screen::Hrv; u.hrv = &hrvSlowR; u.hrvHistory = &hrvSlow; cases.push_back({"c_hrv_slow_breathing", u}); }
   { UiData u = base; u.screen = Screen::Hrv; u.hrv = &hrvRisingR; u.hrvHistory = &hrvRising; u.beatFlash = false; cases.push_back({"d_hrv_hr_changing", u}); }
   { UiData u = base; u.screen = Screen::Hrv; u.hrv = &hrvHalfR; u.hrvHistory = &hrvHalf; u.beatFlash = false; cases.push_back({"e_hrv_collecting", u}); }
-  { UiData u = base; u.screen = Screen::Details; u.beatFlash = false; cases.push_back({"f_details", u}); }
   { UiData u = base; u.screen = Screen::Wave; cases.push_back({"g_wave", u}); }
   { UiData u = base; u.screen = Screen::Summary; cases.push_back({"h_summary", u}); }
   { UiData u = base; u.q = {SignalState::NoFinger, 0, false, false}; u.wave = &flat; u.beatFlash = false; cases.push_back({"i_place_finger", u}); }
   { UiData u = base; u.q = {SignalState::Searching, 0, false, false}; u.fingerSec = 3.5f; u.wave = &startWave; cases.push_back({"j_measuring", u}); }
   { UiData u = base; u.q = {SignalState::Moving, 30, false, false}; u.beatFlash = false; cases.push_back({"k_hold_still", u}); }
   { UiData u = base; u.sessionActive = true; u.sessionSec = 83; cases.push_back({"l_live_recording", u}); }
+  // Phase 6: breathing rate and pacer (6/min: 4 s in, 6 s out)
+  static BreathResult brOk{}, brWait{}, brUnsure{};
+  brOk.valid = true; brOk.rate = 12.4f; brOk.progress = 1; brOk.agree = 3;
+  brWait.progress = 0.45f;
+  brUnsure.progress = 1;
+  base.breath = &brOk;
+  { UiData u = base; u.screen = Screen::Details; u.beatFlash = false; cases.push_back({"f_details", u}); }
+  {
+    BreathPacer p6; p6.next();                       // 6 per minute
+    UiData u = base; u.screen = Screen::Breathe; u.beatFlash = false;
+    cases.push_back({"m_breathe_off", u});
+    u.breath = &brWait; cases.push_back({"m_breathe_collecting", u});
+    u.breath = &brUnsure; cases.push_back({"m_breathe_unsure", u});
+    static BreathResult br6{}; br6.valid = true; br6.rate = 6.2f; br6.progress = 1;
+    u.breath = &br6;
+    for (int i = 0; i < 150; i++) p6.tick();         // 1.5 s into breathing in
+    u.pacer = p6.state(); u.recording = true; cases.push_back({"n_breathe_in", u});
+    for (int i = 0; i < 400; i++) p6.tick();         // 5.5 s: breathing out
+    u.pacer = p6.state(); cases.push_back({"o_breathe_out", u});
+  }
 
   std::vector<Case> moveCases;
   { UiData u = base; u.screen = Screen::Wave; u.bpm = 78; u.wave = &moveOld; moveCases.push_back({"1_after_movement_before_fix", u}); }

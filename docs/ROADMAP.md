@@ -59,6 +59,10 @@ Breathing slightly changes the PPG baseline, the pulse height and the time betwe
 
 Done when: within about 2 breaths/min of counting my own breaths.
 
+Plan (20 Oct 2026): first record real raw data with a breathing pacer on the OLED, so the true rate is known, then build and tune the estimator on those recordings ([Karlen 2013 "smart fusion"](REFERENCES.md)). See `phase6_breathing.md`.
+
+Done (20 Oct 2026): runs on the device; every shown rate within 2 /min of the pacer at 6/10/15/20, and free breathing 31.3 /min vs ~32 counted. Weak spot: right after exercise (high, falling heart rate) it often shows "--".
+
 ## Phase 7: guided breathing mode
 
 Breathing animation on the OLED (in 4 s, out 6 s) with BPM and RMSSD updating live, and a before/after result at the end. Planning to use this for the demo.

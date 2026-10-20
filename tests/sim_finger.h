@@ -29,6 +29,7 @@ struct Sim {
   float rsa = 0;            // breathing makes the heart rate go up and down (0.05 = +-5%)
   float breathRate = 0.25f; // breaths per second (0.25 = 15/min normal, 0.1 = 6/min slow breathing)
   float bpmEnd = -1;        // if set, heart rate changes linearly to this by the end
+  float breathAmp = 0;      // breathing changes each pulse's height (0.1 = +-10%)
   float bumpAt    = -1;     // short finger-pressure bump (10%, 150 ms)
   float fingerOffFrom = -1, fingerOffTo = -1;
   float dicrotic  = 0.35f;  // size of the second bump of each pulse (real fingers: anything from 0.1 to ~0.6)
@@ -63,6 +64,7 @@ public:
       beats_.push_back(nextBeat_);
       // Only draw a random height when asked for, so older tests keep the same random sequence.
       float a = (s_.ampJitter > 0) ? 1 + s_.ampJitter * amp_(rng_) : 1.0f;
+      a *= 1 + s_.breathAmp * sinf(2 * 3.14159f * s_.breathRate * nextBeat_);
       heights_.push_back(a < 0.2f ? 0.2f : a);
       float breath = s_.rsa * sinf(2 * 3.14159f * s_.breathRate * nextBeat_);
       float bpmNow = (s_.bpmEnd < 0) ? s_.bpm : s_.bpm + (s_.bpmEnd - s_.bpm) * nextBeat_ / s_.seconds;

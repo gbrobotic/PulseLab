@@ -106,3 +106,5 @@ Optional extra check: hold my breath for ~30 s. SpO2 should stay about the same 
 - motion, cold fingers (weak pulse), nail polish and bright room light all affect optical SpO2
 - pulse oximeters in general are known to read less accurately on darker skin, because more light is absorbed by melanin. Worth mentioning in the report
 - this is a student project, not for medical use
+
+Background on the ratio of ratios and why it needs calibration: [ref 4 in REFERENCES.md](REFERENCES.md).

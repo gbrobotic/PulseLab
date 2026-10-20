@@ -92,3 +92,5 @@ Compared with a reference (to fill in):
 | 3 | 90 | 92 (phone) | -2 |
 
 Average difference -3.9 BPM. All three are lower than the phone, so there may be a small offset, but 3 readings against a phone camera app isn't enough to say which one is off. To check: count beats in Serial Monitor mode for exactly 60 s while counting my pulse at the wrist. If those match, beat detection is right and the difference comes from averaging or the phone. Will also check against a proper oximeter in Phase 11.
+
+Background on the PPG signal and the pulse shape: [refs 2 and 3 in REFERENCES.md](REFERENCES.md).

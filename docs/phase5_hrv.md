@@ -12,7 +12,7 @@ PulseLab works it out from the beat-to-beat intervals it already measures, over 
 - **SDNN**: standard deviation of the intervals.
 - **pNN50**: % of neighbouring intervals that differ by more than 50 ms.
 
-Standard HRV recordings are 5 minutes (Task Force of the European Society of Cardiology and NASPE, 1996). One-minute RMSSD is a common shorter version, used by many wearables, but it's noisier.
+Standard HRV recordings are 5 minutes (Task Force of the European Society of Cardiology and NASPE, 1996, [ref 5](REFERENCES.md)). One-minute RMSSD is a common shorter version, used by many wearables, but it's noisier ([ref 7](REFERENCES.md)).
 
 ## Step 1: timing beats more precisely
 
@@ -57,7 +57,7 @@ From RMSSD, as a rough guide:
 | 20-35 ms | Some stress |
 | under 20 ms | High stress |
 
-These are rough ranges for resting adults, not a medical or validated stress measure. HRV also depends on age, fitness, breathing, posture, caffeine and time of day. Comparing the same person in the same conditions (before and after slow breathing, for example) says much more than these fixed numbers.
+These are rough ranges for resting adults, not a medical or validated stress measure. HRV also depends on age, fitness, breathing, posture, caffeine and time of day. Comparing the same person in the same conditions ([ref 6](REFERENCES.md) has typical values) (before and after slow breathing, for example) says much more than these fixed numbers.
 
 ## Screen
 
@@ -157,3 +157,5 @@ With the fixed code (both fixes, #11 and #12 in the debug log), 20 Oct 2026. Two
 One thing I looked at: in the slow recording a 377 ms interval was accepted while the screen said "Hold still" (lines 30-31). It's a false beat, let in by the "smooth change" rule, which allows intervals down to 0.55x the median. In all six of my recordings a real interval on a good signal never went below 0.71x the median, so I tried 0.60-0.65. But then the simulator test with very deep breathing (heart rate swinging +-35%) failed: real short beats were rejected and the BPM restarted up to 6 times. Since the 377 happened during "Hold still", the BPM was hidden and HRV ignored it anyway, so I kept 0.55. Phase 7 (guided slow breathing) needs the deep-breathing case to work.
 
 SpO2 was 93-94% in the sitting recording (R about 0.66) and 95-97% in the slow one (R about 0.55), lower than in Phase 3 (97.6-98.4%, R 0.47). The SpO2 formula isn't calibrated yet and R seems to change with how the finger sits on the sensor. That's for Phase 11, with a real pulse oximeter next to it.
+
+Why slow breathing raises HRV this much: around 6 breaths a minute the breathing and the heart rate control loop (baroreflex) fall into step, so the heart rate swings much more with each breath ([ref 8](REFERENCES.md), resonance breathing).
