@@ -1,6 +1,6 @@
 // Tests the Phase 4 signal quality logic on simulated fingers.
 //
-//   g++ -std=c++17 -O2 -I firmware/04_display tests/test_quality.cpp -o test_quality
+//   g++ -std=c++17 -O2 -I firmware/05_hrv tests/test_quality.cpp -o test_quality
 //   ./test_quality
 
 #include <cstdio>

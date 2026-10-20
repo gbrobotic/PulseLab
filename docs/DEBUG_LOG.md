@@ -133,3 +133,39 @@ The screen seemed to flicker a bit, in the videos and in person. Two different t
 - In a second video I measured the screen brightness in all 1,212 frames: the change at 10 Hz (the update rate) was 0.08%, so the brightness doesn't flicker. What looks like flicker is the wave moving in 2-3 pixel jumps 10 times a second (new wave point every 40 ms, screen redrawn every 100 ms).
 
 Fix: redraw at 25 fps, one frame per new wave point so it scrolls 1 pixel at a time. To make that fit, only the pages of the screen that changed are sent (a full redraw takes 33 ms). Details in `phase4_display.md`.
+
+## 11. Slow breathing gave less HRV data, not more
+
+20 Oct 2026, Phase 5
+
+First real HRV test: one log sitting (with some fast breathing), one with slow breathing (5 s in, 5 s out). Three problems:
+
+- HRV stayed at "5%" for about a minute. The first intervals were junk (327, 311, 963 ms while still "Measuring...") and became the reference for the artifact check, so good intervals after them were thrown out. Fix: only use intervals from a good signal, and compare each interval with its neighbours on both sides (median of 2 before, itself, 2 after).
+- In the slow breathing log 15 real intervals were rejected and it went back to "Measuring" 4 times, then picked up fake short beats (328-388 ms). The heart rate code from Phase 2 only allowed +-20% from the median, but slow deep breathing swings my intervals from ~700 to over 1000 ms. Fix: wider range on the long side (0.70-1.45x), accept smooth beat-to-beat changes (within 25% of the previous interval), and take 3 rejected intervals that agree as the new rate instead of restarting. Simulator: rejected 36 -> 1, restarts 12 -> 0.
+- While my heart rate was rising it said "Relaxed". RMSSD goes up when the heart rate changes, not only when relaxed. Fix: if the first and last 20 s of the window differ by more than 12%, it shows "HR changing" and no level.
+
+Also: some lines in the recorded log were split in two (`BPM  8` / `8.7`). `capture_serial.py` wrote each read as a line; now it waits for the newline.
+
+Lesson: the simulator's breathing was too gentle (+-5%), so the tests passed. I added slow-breathing and rising-heart-rate cases to `tests/test_hrv.cpp`.
+
+## 12. Heart rate jumped to 140-160 BPM after the Phase 5 fix
+
+20 Oct 2026, Phase 5
+
+After the fix in #11 the heart rate sometimes went up to 140-160 BPM, while the version before it didn't.
+
+Cause: my pulse has a fairly big second bump (the dicrotic wave) about 300-400 ms after each beat. In the logs it shows up as intervals like 306, 318, 328, 379 ms. The 300 ms block after each beat is just too short for it. The old code mostly hid this, because after 3 odd intervals it went back to "Measuring...". The #11 fix made the code accept intervals more easily (needed for slow breathing), and it could then lock onto beat + second bump, so double the heart rate.
+
+I reproduced it in the simulator by moving the second bump later (`dicroticAt` in `sim_finger.h`): the BPM was more than 25% off 40% of the time, up to 2.6x the true rate.
+
+Fix in `ppg_dsp.h`:
+- a peak that comes early (before 70% of the normal interval, or 550 ms at the start) and is smaller than 70% of the previous beat's slope is skipped as the second bump. The real beat has the steepest rise of the pulse, the second bump much less
+- 3 rejected intervals are only taken as the new heart rate if they're 0.65-1.6x the old one. Near half or double is almost always double counting or missed beats, and a real heart rate doesn't jump that much in 3 beats
+
+Over 288 simulated recordings (4 pulse shapes, still and moving finger, 60-100 BPM, normal and slow breathing): BPM more than 25% off went from 18.7% of the time to 2.6%. The Phase 4 code was at 20.8% on the same set (most of it with the late second bump). A real fast heart rate (160 BPM) is still measured within 2.5 BPM.
+
+The Serial log now prints the slope height of each beat (`h 245`) and a line for each skipped second bump, so I can see how big my real second bump is.
+
+Lesson: the simulator's second bump came 260 ms after the beat, always inside the 300 ms block, so this case was never tested. Real logs showed it from the start (306/617/318 ms in the first lines of `hrv_slow.txt`); I should have looked at them more carefully.
+
+Checked on the device afterwards (`hrv_sit2.txt`, `hrv_slow2.txt`): no jumps to double in 5 minutes of recording, BPM 65-94.

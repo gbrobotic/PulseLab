@@ -41,12 +41,17 @@ def main() -> None:
     print(f"Recording {port} for {seconds:.0f} s into {out_file} ... keep your hand still.")
     end = time.time() + seconds
     lines = 0
+    partial = ""
     with open(out_file, "w", encoding="utf-8") as f:
         while time.time() < end:
             raw = ser.readline()
             if not raw:
                 continue
-            line = raw.decode("utf-8", errors="ignore").rstrip()
+            partial += raw.decode("utf-8", errors="ignore")
+            if not partial.endswith("\n"):
+                continue   # half a line arrived (the rest comes in the next read), don't split it
+            line = partial.rstrip()
+            partial = ""
             f.write(line + "\n")
             lines += 1
             if "Beat" in line:

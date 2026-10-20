@@ -51,6 +51,8 @@ Keep the beat-to-beat intervals from the last ~60 s, throw out ones that are way
 
 Done when: RMSSD goes up when I do slow deep breathing.
 
+Done (20 Oct 2026): about 36 ms sitting, about 60 ms with slow breathing. See `phase5_hrv.md`.
+
 ## Phase 6: breathing rate
 
 Breathing slightly changes the PPG baseline, the pulse height and the time between beats. Take one or more of those, filter around 0.1-0.5 Hz (6-30 breaths per min), then count peaks or use FFT over 30-60 s.
@@ -77,6 +79,13 @@ Battery voltage on GPIO3 through a divider, battery % on screen, deep sleep when
 Plan the layout on paper first, female headers for the ESP32 and sensor. Case in Fusion 360 with a finger slot that blocks light. STL/STEP files go in `enclosure/`.
 
 Done when: readings in the case are as good as on the breadboard.
+
+Option to decide here: replace the 1.3" OLED with a 2" colour TFT (ST7789, 240x320, SPI). Notes from checking it (20 Oct 2026):
+- only `ui.h` (the drawing) would change, the signal processing stays the same
+- needs 5 pins, likely SCK GPIO5, MOSI GPIO0, DC GPIO1, CS GPIO20, RST GPIO21, backlight to 3.3V (confirm with the actual module)
+- moves the display off the sensor's I2C bus
+- library: LovyanGFX (compiled fine for the ESP32-C3 with core 3.3.12), using a sprite for the wave
+- costs more power (backlight ~40-60 mA vs ~10-20 mA) and needs a bigger case
 
 ## Phase 11: accuracy test
 

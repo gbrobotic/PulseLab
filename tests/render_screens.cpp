@@ -4,7 +4,7 @@
 //
 // Needs the U8g2 C sources (https://github.com/olikraus/u8g2, folder csrc):
 //   gcc -O2 -c U8G2/csrc/*.c
-//   g++ -std=c++17 -O2 -I U8G2/csrc -I firmware/04_display tests/render_screens.cpp *.o -o render
+//   g++ -std=c++17 -O2 -I U8G2/csrc -I firmware/05_hrv tests/render_screens.cpp *.o -o render
 //   mkdir -p out/movement && ./render out    (writes one .pgm per screen)
 
 #include <cstdio>
@@ -32,6 +32,7 @@ public:
   void drawHLine(int x, int y, int w) { u8g2_DrawHLine(&u8g2_, x, y, w); }
   void drawVLine(int x, int y, int h) { u8g2_DrawVLine(&u8g2_, x, y, h); }
   void drawLine(int x0, int y0, int x1, int y1) { u8g2_DrawLine(&u8g2_, x0, y0, x1, y1); }
+  void drawPixel(int x, int y) { u8g2_DrawPixel(&u8g2_, x, y); }
   void drawDisc(int x, int y, int r, uint8_t opt = U8G2_DRAW_ALL) { u8g2_DrawDisc(&u8g2_, x, y, r, opt); }
   void drawCircle(int x, int y, int r, uint8_t opt = U8G2_DRAW_ALL) { u8g2_DrawCircle(&u8g2_, x, y, r, opt); }
   void drawTriangle(int x0, int y0, int x1, int y1, int x2, int y2) { u8g2_DrawTriangle(&u8g2_, x0, y0, x1, y1, x2, y2); }
@@ -94,6 +95,37 @@ int main(int argc, char** argv) {
   }
   for (WaveBuffer* w : {&wave, &startWave, &moveOld, &moveNew}) w->updateScale();
 
+  // HRV: 75 s of a relaxed finger with breathing-linked heart rate changes
+  HrvAnalyzer hrvFull, hrvHalf;
+  HrvResult hrvFullR{}, hrvHalfR{};
+  {
+    Sim s; s.bpm = 72; s.seconds = 75; s.beatJitter = 0.012f; s.rsa = 0.05f;
+    SimFinger f(s, 21);
+    HeartRateDetector hr; hr.reset(); Spo2Estimator sp; sp.reset(); QualityMonitor qm; qm.reset();
+    hrvFull.reset(); hrvHalf.reset();
+    float ir, red;
+    while (f.next(ir, red)) {
+      HrResult h = hr.process(ir); Spo2Result r = sp.process(ir, red, h); QualityResult q = qm.process(h, r, ir, red);
+      hrvFull.process(h, q);
+      if (f.t() < 20) hrvHalf.process(h, q);
+    }
+    hrvFullR = hrvFull.result(); hrvHalfR = hrvHalf.result();
+    printf("render HRV: RMSSD %.1f, level %s; collecting: %.0f%%\n", hrvFullR.rmssd, stressText(hrvFullR.level), hrvHalfR.progress * 100);
+  }
+  // slow deep breathing (6/min) and a heart rate that is rising
+  auto runHrv = [](Sim s, unsigned seed, HrvAnalyzer& hv) {
+    SimFinger f(s, seed);
+    HeartRateDetector hr; hr.reset(); Spo2Estimator sp; sp.reset(); QualityMonitor qm; qm.reset(); hv.reset();
+    float ir, red;
+    while (f.next(ir, red)) { HrResult h = hr.process(ir); Spo2Result r = sp.process(ir, red, h); hv.process(h, qm.process(h, r, ir, red)); }
+    return hv.result();
+  };
+  HrvAnalyzer hrvSlow, hrvRising;
+  HrvResult hrvSlowR, hrvRisingR;
+  { Sim s; s.bpm = 72; s.seconds = 80; s.beatJitter = 0.01f; s.rsa = 0.22f; s.breathRate = 0.1f; hrvSlowR = runHrv(s, 4, hrvSlow); }
+  { Sim s; s.bpm = 65; s.bpmEnd = 100; s.seconds = 80; s.beatJitter = 0.015f; hrvRisingR = runHrv(s, 4, hrvRising); }
+  printf("render HRV slow breathing: RMSSD %.1f %s; rising HR: RMSSD %.1f steady %d\n", hrvSlowR.rmssd, stressText(hrvSlowR.level), hrvRisingR.rmssd, hrvRisingR.steady);
+
   SessionSummary sum{};
   sum.valid = true; sum.seconds = 135; sum.bpmCount = 168;
   sum.bpmAvg = 76.3f; sum.bpmMin = 71.2f; sum.bpmMax = 82.6f;
@@ -105,18 +137,24 @@ int main(int argc, char** argv) {
   base.bpm = 76.4f; base.spo2 = 97.9f; base.pi = 1.72f; base.r = 0.481f;
   base.beatFlash = true; base.fingerSec = 20; base.wave = &wave;
   base.summary = &sum;
+  base.hrv = &hrvFullR; base.hrvHistory = &hrvFull;
+  sum.rmssd = 43.6f;
 
   struct Case { const char* name; UiData u; };
   std::vector<Case> cases;
 
-  { UiData u = base; cases.push_back({"1_live_good", u}); }
-  { UiData u = base; u.q = {SignalState::NoFinger, 0, false, false}; u.wave = &flat; u.beatFlash = false; cases.push_back({"2_place_finger", u}); }
-  { UiData u = base; u.q = {SignalState::Searching, 0, false, false}; u.fingerSec = 3.5f; u.wave = &startWave; cases.push_back({"3_measuring", u}); }
-  { UiData u = base; u.q = {SignalState::Moving, 30, false, false}; u.beatFlash = false; cases.push_back({"4_hold_still", u}); }
-  { UiData u = base; u.sessionActive = true; u.sessionSec = 83; cases.push_back({"5_live_recording", u}); }
-  { UiData u = base; u.screen = Screen::Details; u.beatFlash = false; cases.push_back({"6_details", u}); }
-  { UiData u = base; u.screen = Screen::Wave; cases.push_back({"7_wave", u}); }
-  { UiData u = base; u.screen = Screen::Summary; cases.push_back({"8_summary", u}); }
+  { UiData u = base; cases.push_back({"a_live_good", u}); }
+  { UiData u = base; u.screen = Screen::Hrv; cases.push_back({"b_hrv", u}); }
+  { UiData u = base; u.screen = Screen::Hrv; u.hrv = &hrvSlowR; u.hrvHistory = &hrvSlow; cases.push_back({"c_hrv_slow_breathing", u}); }
+  { UiData u = base; u.screen = Screen::Hrv; u.hrv = &hrvRisingR; u.hrvHistory = &hrvRising; u.beatFlash = false; cases.push_back({"d_hrv_hr_changing", u}); }
+  { UiData u = base; u.screen = Screen::Hrv; u.hrv = &hrvHalfR; u.hrvHistory = &hrvHalf; u.beatFlash = false; cases.push_back({"e_hrv_collecting", u}); }
+  { UiData u = base; u.screen = Screen::Details; u.beatFlash = false; cases.push_back({"f_details", u}); }
+  { UiData u = base; u.screen = Screen::Wave; cases.push_back({"g_wave", u}); }
+  { UiData u = base; u.screen = Screen::Summary; cases.push_back({"h_summary", u}); }
+  { UiData u = base; u.q = {SignalState::NoFinger, 0, false, false}; u.wave = &flat; u.beatFlash = false; cases.push_back({"i_place_finger", u}); }
+  { UiData u = base; u.q = {SignalState::Searching, 0, false, false}; u.fingerSec = 3.5f; u.wave = &startWave; cases.push_back({"j_measuring", u}); }
+  { UiData u = base; u.q = {SignalState::Moving, 30, false, false}; u.beatFlash = false; cases.push_back({"k_hold_still", u}); }
+  { UiData u = base; u.sessionActive = true; u.sessionSec = 83; cases.push_back({"l_live_recording", u}); }
 
   std::vector<Case> moveCases;
   { UiData u = base; u.screen = Screen::Wave; u.bpm = 78; u.wave = &moveOld; moveCases.push_back({"1_after_movement_before_fix", u}); }

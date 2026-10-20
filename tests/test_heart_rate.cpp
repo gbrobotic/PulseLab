@@ -1,7 +1,7 @@
 // Tests the Phase 2 beat detector on a simulated PPG signal, on a PC.
 //
 // Build and run (needs g++):
-//   g++ -std=c++17 -O2 -I firmware/04_display tests/test_heart_rate.cpp -o test_hr
+//   g++ -std=c++17 -O2 -I firmware/05_hrv tests/test_heart_rate.cpp -o test_hr
 //   ./test_hr
 //
 // The fake signal has: a DC level, breathing drift, systolic + dicrotic pulse
@@ -13,6 +13,7 @@
 #include <random>
 #include <vector>
 #include "ppg_dsp.h"
+#include "sim_finger.h"
 
 using namespace pulselab;
 
@@ -180,6 +181,41 @@ int main() {
              a.firstBpmSec, a.bpmAtEnd[0], a.trueBpmEnd[0], b.bpmAtEnd[0], b.trueBpmEnd[0]);
     check("recovers quickly and BPM stays right", a.firstBpmSec > 0 && a.firstBpmSec < 8 &&
           fabsf(a.bpmAtEnd[0] - a.trueBpmEnd[0]) <= 2 && fabsf(b.bpmAtEnd[0] - b.trueBpmEnd[0]) <= 2, buf);
+  }
+
+  printf("10. Second bump of the pulse 300-400 ms after the beat (seen in my real logs)\n");
+  {
+    // Before the second bump check, this pulse shape showed double heart rate
+    // (140-190 BPM) a lot of the time. Uses the simulated finger from sim_finger.h.
+    double wrong = 0, n = 0; float maxBpm = 0;
+    struct { float d, at, bpm, rsa; } cases[] = {{0.4f, 0.42f, 75, 0.05f}, {0.4f, 0.42f, 95, 0.05f}, {0.3f, 0.47f, 70, 0.25f}, {0.4f, 0.42f, 65, 0.25f}};
+    unsigned seed = 20;
+    for (auto& c : cases) {
+      Sim sim; sim.seconds = 90; sim.bpm = c.bpm; sim.dicrotic = c.d; sim.dicroticAt = c.at; sim.ampJitter = 0.15f;
+      sim.rsa = c.rsa; sim.breathRate = c.rsa > 0.1f ? 0.1f : 0.25f; sim.noiseIr = 15;
+      SimFinger f(sim, seed++); HeartRateDetector hr; hr.reset(); float ir, red;
+      while (f.next(ir, red)) {
+        HrResult h = hr.process(ir);
+        if (f.t() < 10 || h.bpm == 0) continue;
+        n++;
+        if (h.bpm > 1.25f * c.bpm || h.bpm < 0.75f * c.bpm) wrong++;
+        if (h.bpm / c.bpm > maxBpm) maxBpm = h.bpm / c.bpm;
+      }
+    }
+    snprintf(buf, sizeof buf, "BPM more than 25%% off for %.1f%% of the time, highest %.2fx the true rate", 100 * wrong / n, maxBpm);
+    check("no double heart rate", wrong / n < 0.02 && maxBpm < 1.3f, buf);
+  }
+
+  printf("11. Real fast heart rate (160 BPM, beat height varies +-30%%) is not taken for second bumps\n");
+  {
+    double err = 0, n = 0;
+    for (unsigned seed = 30; seed < 34; seed++) {
+      Sim sim; sim.seconds = 60; sim.bpm = 160; sim.ampJitter = 0.3f; sim.noiseIr = 15; sim.dicrotic = 0.2f;
+      SimFinger f(sim, seed); HeartRateDetector hr; hr.reset(); float ir, red;
+      while (f.next(ir, red)) { HrResult h = hr.process(ir); if (f.t() >= 10 && h.bpm > 0) { err += fabsf(h.bpm - 160); n++; } }
+    }
+    snprintf(buf, sizeof buf, "mean error %.1f BPM", err / n);
+    check("mean error under 3 BPM", n > 0 && err / n < 3, buf);
   }
 
   printf("\n%s (%d failed)\n", failures ? "SOME TESTS FAILED" : "ALL TESTS PASSED", failures);

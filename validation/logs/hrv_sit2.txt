@@ -1,0 +1,256 @@
+  (raw IR 39466, red 34285 | 25.0 fps, 3.7 pages/frame, frame 17 ms, max 33 ms | FIFO resets 0)
+Beat 2385 ms rej BPM   0.0 | SpO2   0.0% PI 0.00% R 0.000 | HRV -- (0%) | quality   0 | h 146  (BPM hidden)  (SpO2 hidden)
+Beat  832 ms ok  BPM   0.0 | SpO2   0.0% PI 0.00% R 0.000 | HRV -- (0%) | quality  43 | h 160  (BPM hidden)  (SpO2 hidden)
+  (raw IR 38861, red 33925 | 24.9 fps, 3.9 pages/frame, frame 18 ms, max 33 ms | FIFO resets 0)
+Beat  831 ms ok  BPM   0.0 | SpO2   0.0% PI 0.00% R 0.000 | HRV -- (0%) | quality  57 | h 154  (BPM hidden)  (SpO2 hidden)
+[Good signal]
+Beat  862 ms ok  BPM  71.3 | SpO2   0.0% PI 0.00% R 0.000 | HRV -- (0%) | quality  64 | h 212  (SpO2 hidden)
+  (raw IR 39200, red 33829 | 25.0 fps, 3.3 pages/frame, frame 10 ms, max 33 ms | FIFO resets 0)
+Beat  875 ms ok  BPM  70.6 | SpO2  94.0% PI 1.38% R 0.639 | HRV -- (0%) | quality  80 | h 183
+Beat  899 ms ok  BPM  69.8 | SpO2  94.1% PI 1.38% R 0.635 | HRV -- (0%) | quality  83 | h 132
+  (raw IR 38891, red 33409 | 24.9 fps, 2.5 pages/frame, frame 15 ms, max 33 ms | FIFO resets 0)
+Beat  814 ms ok  BPM  70.4 | SpO2  94.1% PI 1.35% R 0.635 | HRV -- (5%) | quality  86 | h 116
+Beat  612 ms ok  BPM  73.4 | SpO2  94.1% PI 1.38% R 0.635 | HRV -- (8%) | quality  88 | h 70
+Beat 1023 ms ok  BPM  71.1 | SpO2  94.3% PI 1.40% R 0.628 | HRV -- (11%) | quality 100 | h 212
+  (raw IR 37815, red 32794 | 25.0 fps, 1.0 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  793 ms ok  BPM  71.5 | SpO2  94.3% PI 1.40% R 0.628 | HRV -- (11%) | quality 100 | h 231
+Beat  789 ms ok  BPM  72.0 | SpO2  94.5% PI 1.45% R 0.621 | HRV -- (11%) | quality 100 | h 188
+  (raw IR 38143, red 32913 | 25.0 fps, 0.4 pages/frame, frame 1 ms, max 33 ms | FIFO resets 0)
+Beat  852 ms ok  BPM  72.1 | SpO2  94.7% PI 1.48% R 0.610 | HRV -- (14%) | quality 100 | h 221
+Beat  895 ms ok  BPM  71.9 | SpO2  94.7% PI 1.57% R 0.610 | HRV -- (16%) | quality 100 | h 228
+Beat  912 ms ok  BPM  71.7 | SpO2  94.7% PI 1.62% R 0.610 | HRV -- (19%) | quality 100 | h 199
+  (raw IR 37385, red 32549 | 25.0 fps, 0.4 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  866 ms ok  BPM  71.2 | SpO2  94.2% PI 1.65% R 0.630 | HRV -- (22%) | quality 100 | h 233
+Beat  817 ms ok  BPM  69.1 | SpO2  94.1% PI 1.69% R 0.638 | HRV -- (25%) | quality 100 | h 230
+  (raw IR 37647, red 32627 | 25.0 fps, 0.5 pages/frame, frame 1 ms, max 33 ms | FIFO resets 0)
+Beat  827 ms ok  BPM  71.1 | SpO2  94.0% PI 1.79% R 0.641 | HRV -- (28%) | quality 100 | h 231
+Beat  908 ms ok  BPM  69.9 | SpO2  94.0% PI 1.79% R 0.641 | HRV -- (31%) | quality 100 | h 258
+  (raw IR 37911, red 32812 | 25.0 fps, 0.3 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  845 ms ok  BPM  69.3 | SpO2  94.0% PI 1.91% R 0.641 | HRV -- (34%) | quality 100 | h 250
+Beat  766 ms ok  BPM  70.2 | SpO2  93.8% PI 1.97% R 0.647 | HRV -- (37%) | quality 100 | h 224
+Beat  749 ms ok  BPM  71.7 | SpO2  94.0% PI 1.98% R 0.642 | HRV -- (39%) | quality 100 | h 243
+  (raw IR 37371, red 32475 | 24.5 fps, 0.4 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  769 ms ok  BPM  73.3 | SpO2  93.8% PI 1.98% R 0.647 | HRV -- (42%) | quality 100 | h 241
+Beat  815 ms ok  BPM  73.9 | SpO2  93.7% PI 1.99% R 0.653 | HRV -- (44%) | quality 100 | h 227
+  (raw IR 37243, red 32291 | 25.0 fps, 0.4 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  772 ms ok  BPM  74.4 | SpO2  93.6% PI 1.99% R 0.656 | HRV -- (47%) | quality 100 | h 224
+Beat  873 ms ok  BPM  73.9 | SpO2  93.7% PI 1.98% R 0.653 | HRV -- (50%) | quality 100 | h 268
+Beat  921 ms ok  BPM  73.7 | SpO2  93.7% PI 2.00% R 0.650 | HRV -- (52%) | quality 100 | h 292
+  (raw IR 37291, red 32407 | 25.0 fps, 0.4 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  891 ms ok  BPM  73.2 | SpO2  93.7% PI 2.00% R 0.650 | HRV -- (55%) | quality 100 | h 248
+Beat  851 ms ok  BPM  72.3 | SpO2  93.7% PI 2.00% R 0.652 | HRV -- (58%) | quality 100 | h 264
+  (raw IR 37536, red 32502 | 25.0 fps, 0.5 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  880 ms ok  BPM  70.9 | SpO2  93.6% PI 2.07% R 0.654 | HRV -- (61%) | quality 100 | h 251
+Beat  826 ms ok  BPM  70.3 | SpO2  93.7% PI 2.10% R 0.652 | HRV -- (64%) | quality 100 | h 252
+  (raw IR 37676, red 32404 | 25.0 fps, 0.3 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  753 ms ok  BPM  70.9 | SpO2  93.8% PI 2.11% R 0.649 | HRV -- (67%) | quality 100 | h 264
+Beat  811 ms ok  BPM  70.5 | SpO2  93.8% PI 2.11% R 0.649 | HRV -- (70%) | quality 100 | h 254
+Beat  879 ms ok  BPM  70.5 | SpO2  93.7% PI 2.21% R 0.652 | HRV -- (72%) | quality 100 | h 246
+  (raw IR 37446, red 32281 | 25.0 fps, 0.4 pages/frame, frame 1 ms, max 33 ms | FIFO resets 0)
+Beat  833 ms ok  BPM  71.4 | SpO2  93.6% PI 2.11% R 0.656 | HRV -- (75%) | quality 100 | h 248
+Beat  818 ms ok  BPM  72.2 | SpO2  93.4% PI 2.10% R 0.664 | HRV -- (78%) | quality 100 | h 250
+  (raw IR 37682, red 32421 | 25.0 fps, 0.4 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  884 ms ok  BPM  71.8 | SpO2  93.2% PI 2.10% R 0.674 | HRV -- (81%) | quality 100 | h 257
+Beat  887 ms ok  BPM  71.7 | SpO2  93.2% PI 2.10% R 0.674 | HRV -- (83%) | quality 100 | h 247
+  (raw IR 36998, red 31997 | 25.0 fps, 0.3 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  834 ms ok  BPM  71.7 | SpO2  93.0% PI 2.10% R 0.681 | HRV -- (86%) | quality 100 | h 219
+Beat  857 ms ok  BPM  70.6 | SpO2  93.0% PI 2.10% R 0.681 | HRV -- (89%) | quality 100 | h 249
+Beat  882 ms ok  BPM  69.8 | SpO2  93.1% PI 2.15% R 0.676 | HRV -- (92%) | quality 100 | h 266
+  (raw IR 37085, red 32030 | 25.0 fps, 0.6 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  877 ms ok  BPM  69.8 | SpO2  93.1% PI 2.15% R 0.675 | HRV -- (95%) | quality 100 | h 248
+Beat  817 ms ok  BPM  70.0 | SpO2  93.3% PI 2.20% R 0.666 | HRV -- (98%) | quality 100 | h 263
+  (raw IR 37507, red 32328 | 25.0 fps, 0.3 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  863 ms ok  BPM  69.6 | SpO2  93.3% PI 2.28% R 0.666 | HRV 49.4 Calm | quality 100 | h 377
+Beat  860 ms ok  BPM  69.8 | SpO2  93.6% PI 2.40% R 0.655 | HRV 49.7 Calm | quality 100 | h 315
+  (raw IR 36535, red 31723 | 25.0 fps, 0.4 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  849 ms ok  BPM  70.2 | SpO2  93.8% PI 2.45% R 0.649 | HRV 49.6 Calm | quality 100 | h 263
+Beat  783 ms ok  BPM  70.7 | SpO2  93.8% PI 2.50% R 0.649 | HRV 48.9 Calm | quality 100 | h 240
+Beat  769 ms ok  BPM  71.6 | SpO2  93.6% PI 2.50% R 0.658 | HRV 48.3 Calm | quality 100 | h 254
+  (raw IR 37220, red 32169 | 24.5 fps, 0.6 pages/frame, frame 1 ms, max 33 ms | FIFO resets 0)
+Beat  777 ms ok  BPM  72.8 | SpO2  93.6% PI 2.45% R 0.657 | HRV 48.9 Calm | quality 100 | h 254
+Beat  820 ms ok  BPM  73.4 | SpO2  93.5% PI 2.45% R 0.661 | HRV 48.3 Calm | quality 100 | h 259
+  (raw IR 36384, red 31687 | 25.0 fps, 0.4 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  832 ms ok  BPM  73.2 | SpO2  93.5% PI 2.42% R 0.661 | HRV 47.7 Calm | quality 100 | h 302
+Beat  848 ms ok  BPM  73.4 | SpO2  93.6% PI 2.42% R 0.657 | HRV 47.6 Calm | quality 100 | h 300
+Beat  829 ms ok  BPM  73.8 | SpO2  93.6% PI 2.39% R 0.657 | HRV 47.1 Calm | quality 100 | h 268
+  (raw IR 36725, red 31942 | 25.0 fps, 0.6 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  793 ms ok  BPM  74.4 | SpO2  93.6% PI 2.33% R 0.657 | HRV 46.6 Calm | quality 100 | h 287
+Beat  849 ms ok  BPM  73.7 | SpO2  93.6% PI 2.33% R 0.657 | HRV 46.2 Calm | quality 100 | h 344
+  (raw IR 36898, red 31980 | 25.0 fps, 0.3 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  783 ms ok  BPM  73.5 | SpO2  93.7% PI 2.39% R 0.653 | HRV 46.0 Calm | quality 100 | h 369
+Beat  801 ms ok  BPM  73.2 | SpO2  93.7% PI 2.45% R 0.653 | HRV 46.2 Calm | quality 100 | h 370
+Beat  808 ms ok  BPM  73.4 | SpO2  93.7% PI 2.45% R 0.651 | HRV 46.7 Calm | quality 100 | h 307
+  (raw IR 36559, red 31931 | 25.0 fps, 0.4 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  807 ms ok  BPM  73.6 | SpO2  93.7% PI 2.50% R 0.651 | HRV 46.3 Calm | quality 100 | h 263
+Beat  768 ms ok  BPM  74.6 | SpO2  93.7% PI 2.45% R 0.653 | HRV 45.9 Calm | quality 100 | h 230
+  (raw IR 37428, red 32438 | 25.0 fps, 0.3 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  809 ms ok  BPM  74.8 | SpO2  93.6% PI 2.38% R 0.656 | HRV 45.4 Calm | quality 100 | h 215
+Beat  756 ms ok  BPM  75.2 | SpO2  93.5% PI 2.23% R 0.661 | HRV 45.3 Calm | quality 100 | h 229
+Beat  718 ms ok  BPM  76.8 | SpO2  93.4% PI 1.96% R 0.665 | HRV 45.2 Calm | quality 100 | h 237
+  (raw IR 37141, red 32343 | 25.0 fps, 0.4 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  744 ms ok  BPM  77.3 | SpO2  93.4% PI 1.89% R 0.665 | HRV 45.4 Calm | quality 100 | h 261
+Beat  742 ms ok  BPM  78.0 | SpO2  93.5% PI 1.89% R 0.661 | HRV 45.2 Calm | quality 100 | h 231
+Beat  721 ms ok  BPM  79.1 | SpO2  93.6% PI 1.90% R 0.656 | HRV 45.0 Calm | quality 100 | h 255
+  (raw IR 37059, red 32312 | 25.0 fps, 0.5 pages/frame, frame 6 ms, max 33 ms | FIFO resets 0)
+Beat  715 ms ok  BPM  80.4 | SpO2  93.3% PI 1.80% R 0.668 | HRV 44.6 Calm | quality 100 | h 229
+Beat  773 ms ok  BPM  80.3 | SpO2  93.5% PI 1.80% R 0.659 | HRV 44.3 Calm | quality 100 | h 307
+  (raw IR 37504, red 32654 | 25.0 fps, 0.3 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  842 ms ok  BPM  79.9 | SpO2  93.8% PI 1.94% R 0.646 | HRV 43.9 Calm | quality 100 | h 275
+Beat  837 ms ok  BPM  78.8 | SpO2  94.0% PI 2.04% R 0.640 | HRV 44.2 Calm | quality 100 | h 226
+Beat  824 ms ok  BPM  77.4 | SpO2  94.0% PI 2.06% R 0.640 | HRV 44.7 Calm | quality 100 | h 257
+  (raw IR 37354, red 32564 | 24.9 fps, 0.4 pages/frame, frame 6 ms, max 33 ms | FIFO resets 0)
+Beat  837 ms ok  BPM  76.3 | SpO2  94.0% PI 2.06% R 0.640 | HRV 44.3 Calm | quality 100 | h 260
+Beat  869 ms ok  BPM  74.8 | SpO2  94.0% PI 2.07% R 0.640 | HRV 44.0 Calm | quality 100 | h 244
+  (raw IR 37683, red 32703 | 25.0 fps, 0.4 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  864 ms ok  BPM  73.2 | SpO2  94.1% PI 2.08% R 0.635 | HRV 43.7 Calm | quality 100 | h 262
+Beat  857 ms ok  BPM  71.6 | SpO2  94.4% PI 2.12% R 0.626 | HRV 43.5 Calm | quality 100 | h 233
+  (raw IR 37190, red 32336 | 25.0 fps, 0.2 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  786 ms ok  BPM  71.5 | SpO2  94.4% PI 2.12% R 0.626 | HRV 43.2 Calm | quality 100 | h 214
+Beat  820 ms ok  BPM  71.7 | SpO2  94.1% PI 2.09% R 0.635 | HRV 42.9 Calm | quality 100 | h 222
+Beat  838 ms ok  BPM  71.7 | SpO2  94.0% PI 2.09% R 0.638 | HRV 43.5 Calm | quality 100 | h 223
+  (raw IR 37301, red 32351 | 24.5 fps, 0.6 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  832 ms ok  BPM  71.6 | SpO2  94.0% PI 1.99% R 0.638 | HRV 43.3 Calm | quality 100 | h 226
+Beat  797 ms ok  BPM  72.0 | SpO2  94.0% PI 1.91% R 0.640 | HRV 43.4 Calm | quality 100 | h 216
+  (raw IR 37552, red 32478 | 25.0 fps, 0.2 pages/frame, frame 1 ms, max 33 ms | FIFO resets 0)
+Beat  792 ms ok  BPM  72.9 | SpO2  93.9% PI 1.87% R 0.642 | HRV 43.3 Calm | quality 100 | h 228
+Beat  869 ms ok  BPM  72.8 | SpO2  93.8% PI 1.83% R 0.650 | HRV 42.2 Calm | quality 100 | h 241
+Beat  865 ms ok  BPM  72.7 | SpO2  93.6% PI 1.83% R 0.656 | HRV 41.9 Calm | quality 100 | h 243
+  (raw IR 37092, red 32231 | 25.0 fps, 0.4 pages/frame, frame 1 ms, max 33 ms | FIFO resets 0)
+Beat  883 ms ok  BPM  71.7 | SpO2  93.6% PI 1.86% R 0.656 | HRV 42.6 Calm | quality 100 | h 210
+Beat  863 ms ok  BPM  71.2 | SpO2  93.6% PI 1.87% R 0.657 | HRV 42.3 Calm | quality 100 | h 230
+  (raw IR 37171, red 32238 | 25.0 fps, 0.5 pages/frame, frame 1 ms, max 33 ms | FIFO resets 0)
+Beat  913 ms ok  BPM  70.4 | SpO2  93.6% PI 1.87% R 0.658 | HRV 42.4 Calm | quality 100 | h 213
+Beat  876 ms ok  BPM  70.0 | SpO2  93.4% PI 1.86% R 0.666 | HRV 41.8 Calm | quality 100 | h 211
+  (raw IR 37572, red 32398 | 25.0 fps, 0.2 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  835 ms ok  BPM  69.6 | SpO2  93.2% PI 1.83% R 0.673 | HRV 41.9 Calm | quality 100 | h 202
+Beat  866 ms ok  BPM  68.9 | SpO2  93.2% PI 1.83% R 0.673 | HRV 42.1 Calm | quality 100 | h 244
+Beat  862 ms ok  BPM  68.9 | SpO2  93.3% PI 1.87% R 0.670 | HRV 42.0 Calm | quality 100 | h 225
+  (raw IR 36945, red 32002 | 24.9 fps, 0.5 pages/frame, frame 21 ms, max 33 ms | FIFO resets 0)
+Beat  852 ms ok  BPM  69.1 | SpO2  93.2% PI 1.86% R 0.674 | HRV 41.8 Calm | quality 100 | h 214
+Beat  814 ms ok  BPM  69.8 | SpO2  93.2% PI 1.87% R 0.674 | HRV 41.8 Calm | quality 100 | h 228
+  (raw IR 37161, red 32139 | 25.0 fps, 0.2 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  858 ms ok  BPM  69.8 | SpO2  93.3% PI 1.83% R 0.670 | HRV 40.7 Calm | quality 100 | h 244
+Beat  897 ms ok  BPM  70.0 | SpO2  93.1% PI 1.83% R 0.674 | HRV 40.3 Calm | quality 100 | h 231
+  (raw IR 37515, red 32303 | 25.0 fps, 0.4 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  798 ms ok  BPM  70.8 | SpO2  93.5% PI 1.83% R 0.660 | HRV 39.5 Calm | quality 100 | h 223
+Beat  854 ms ok  BPM  70.6 | SpO2  93.7% PI 1.84% R 0.652 | HRV 39.7 Calm | quality 100 | h 241
+Beat  879 ms ok  BPM  70.4 | SpO2  93.7% PI 1.89% R 0.652 | HRV 41.3 Calm | quality 100 | h 235
+  (raw IR 37132, red 32045 | 25.0 fps, 0.5 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  812 ms ok  BPM  71.0 | SpO2  93.5% PI 1.84% R 0.660 | HRV 41.5 Calm | quality 100 | h 213
+Beat  810 ms ok  BPM  71.4 | SpO2  93.6% PI 1.84% R 0.657 | HRV 41.3 Calm | quality 100 | h 227
+  (raw IR 37484, red 32231 | 25.0 fps, 0.2 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  835 ms ok  BPM  71.2 | SpO2  93.4% PI 1.84% R 0.666 | HRV 40.3 Calm | quality 100 | h 233
+Beat  863 ms ok  BPM  71.1 | SpO2  93.1% PI 1.87% R 0.674 | HRV 39.9 Calm | quality 100 | h 259
+  (raw IR 37017, red 31986 | 25.0 fps, 0.4 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  812 ms ok  BPM  72.0 | SpO2  93.4% PI 1.87% R 0.666 | HRV 39.9 Calm | quality 100 | h 237
+Beat  820 ms ok  BPM  71.8 | SpO2  93.3% PI 1.92% R 0.667 | HRV 39.7 Calm | quality 100 | h 238
+Beat  849 ms ok  BPM  71.9 | SpO2  93.1% PI 1.96% R 0.674 | HRV 40.0 Calm | quality 100 | h 234
+  (raw IR 36985, red 31929 | 25.0 fps, 0.3 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  860 ms ok  BPM  72.1 | SpO2  93.3% PI 1.96% R 0.667 | HRV 39.5 Calm | quality 100 | h 271
+Beat  821 ms ok  BPM  72.0 | SpO2  93.4% PI 2.02% R 0.664 | HRV 38.7 Calm | quality 100 | h 249
+  (raw IR 37487, red 32184 | 24.5 fps, 0.3 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  823 ms ok  BPM  71.8 | SpO2  93.2% PI 2.09% R 0.672 | HRV 38.2 Calm | quality 100 | h 251
+Beat  852 ms ok  BPM  71.6 | SpO2  93.2% PI 2.15% R 0.672 | HRV 37.6 Calm | quality 100 | h 292
+Beat  780 ms ok  BPM  72.5 | SpO2  93.5% PI 2.21% R 0.662 | HRV 37.2 Calm | quality 100 | h 265
+  (raw IR 36850, red 31839 | 25.0 fps, 0.6 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  764 ms ok  BPM  73.1 | SpO2  93.5% PI 2.16% R 0.662 | HRV 37.3 Calm | quality 100 | h 232
+Beat  781 ms ok  BPM  73.5 | SpO2  93.3% PI 2.16% R 0.669 | HRV 37.5 Calm | quality 100 | h 196
+  (raw IR 37371, red 32196 | 25.0 fps, 0.2 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  808 ms ok  BPM  74.0 | SpO2  93.3% PI 2.16% R 0.669 | HRV 37.5 Calm | quality 100 | h 213
+Beat  807 ms ok  BPM  74.6 | SpO2  93.3% PI 2.10% R 0.669 | HRV 37.0 Calm | quality 100 | h 239
+Beat  847 ms ok  BPM  74.3 | SpO2  93.2% PI 2.06% R 0.670 | HRV 37.1 Calm | quality 100 | h 250
+  (raw IR 36818, red 31861 | 25.0 fps, 0.6 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  894 ms ok  BPM  73.5 | SpO2  93.3% PI 2.06% R 0.667 | HRV 37.0 Calm | quality 100 | h 277
+Beat  899 ms ok  BPM  72.9 | SpO2  93.5% PI 2.06% R 0.659 | HRV 37.3 Calm | quality 100 | h 252
+  (raw IR 36921, red 31969 | 25.0 fps, 0.2 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  838 ms ok  BPM  72.3 | SpO2  93.3% PI 2.06% R 0.667 | HRV 37.0 Calm | quality 100 | h 276
+Beat  852 ms ok  BPM  71.4 | SpO2  93.3% PI 2.09% R 0.667 | HRV 36.6 Calm | quality 100 | h 296
+  (raw IR 37339, red 32215 | 25.0 fps, 0.2 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  883 ms ok  BPM  70.3 | SpO2  93.6% PI 2.21% R 0.657 | HRV 37.3 Calm | quality 100 | h 272
+Beat  880 ms ok  BPM  69.6 | SpO2  93.6% PI 2.29% R 0.657 | HRV 37.3 Calm | quality 100 | h 292
+Beat  834 ms ok  BPM  69.3 | SpO2  93.3% PI 2.33% R 0.667 | HRV 36.7 Calm | quality 100 | h 275
+  (raw IR 36372, red 31704 | 24.9 fps, 0.4 pages/frame, frame 17 ms, max 33 ms | FIFO resets 0)
+Beat  853 ms ok  BPM  69.2 | SpO2  93.1% PI 2.34% R 0.675 | HRV 36.6 Calm | quality 100 | h 292
+Beat  838 ms ok  BPM  69.8 | SpO2  93.3% PI 2.37% R 0.668 | HRV 37.0 Calm | quality 100 | h 310
+  (raw IR 36855, red 31978 | 25.0 fps, 0.2 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  799 ms ok  BPM  70.8 | SpO2  93.3% PI 2.42% R 0.668 | HRV 36.7 Calm | quality 100 | h 274
+Beat  787 ms ok  BPM  71.4 | SpO2  93.4% PI 2.42% R 0.664 | HRV 36.8 Calm | quality 100 | h 294
+  (raw IR 36759, red 31893 | 25.0 fps, 0.4 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  802 ms ok  BPM  71.9 | SpO2  93.3% PI 2.45% R 0.667 | HRV 37.0 Calm | quality 100 | h 280
+Beat  781 ms ok  BPM  73.0 | SpO2  93.2% PI 2.45% R 0.672 | HRV 37.0 Calm | quality 100 | h 273
+Beat  770 ms ok  BPM  74.3 | SpO2  93.2% PI 2.42% R 0.672 | HRV 36.8 Calm | quality 100 | h 282
+  (raw IR 36889, red 31986 | 25.0 fps, 0.3 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  817 ms ok  BPM  74.5 | SpO2  93.3% PI 2.39% R 0.667 | HRV 36.2 Calm | quality 100 | h 297
+Beat  847 ms ok  BPM  74.5 | SpO2  93.3% PI 2.40% R 0.667 | HRV 35.4 Calm | quality 100 | h 277
+  (raw IR 36774, red 31913 | 25.0 fps, 0.3 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  804 ms ok  BPM  74.9 | SpO2  93.3% PI 2.36% R 0.668 | HRV 35.8 Calm | quality 100 | h 266
+Beat  808 ms ok  BPM  74.8 | SpO2  93.2% PI 2.34% R 0.674 | HRV 36.0 Calm | quality 100 | h 317
+Beat  820 ms ok  BPM  74.4 | SpO2  93.2% PI 2.36% R 0.674 | HRV 36.3 Calm | quality 100 | h 295
+  (raw IR 36526, red 31781 | 25.0 fps, 0.5 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  796 ms ok  BPM  74.5 | SpO2  93.1% PI 2.34% R 0.675 | HRV 36.0 Calm | quality 100 | h 283
+Beat  737 ms ok  BPM  75.0 | SpO2  93.1% PI 2.34% R 0.675 | HRV 35.7 Calm | quality 100 | h 271
+  (raw IR 36320, red 31674 | 25.0 fps, 0.2 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  770 ms ok  BPM  75.0 | SpO2  93.3% PI 2.34% R 0.669 | HRV 35.3 Calm | quality 100 | h 233
+Beat  791 ms ok  BPM  75.3 | SpO2  93.1% PI 2.28% R 0.675 | HRV 35.7 Calm | quality 100 | h 216
+Beat  791 ms ok  BPM  76.0 | SpO2  93.1% PI 2.11% R 0.675 | HRV 35.8 Calm | quality 100 | h 211
+  (raw IR 36951, red 32011 | 24.5 fps, 0.6 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  812 ms ok  BPM  75.9 | SpO2  92.9% PI 1.94% R 0.683 | HRV 35.9 Calm | quality 100 | h 224
+Beat  844 ms ok  BPM  75.5 | SpO2  93.0% PI 1.94% R 0.678 | HRV 35.8 Calm | quality 100 | h 217
+  (raw IR 37031, red 32104 | 25.0 fps, 0.2 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  831 ms ok  BPM  75.3 | SpO2  92.8% PI 1.88% R 0.688 | HRV 35.8 Calm | quality 100 | h 230
+Beat  876 ms ok  BPM  74.4 | SpO2  92.8% PI 1.88% R 0.688 | HRV 35.4 Calm | quality 100 | h 285
+Beat  912 ms ok  BPM  72.4 | SpO2  93.0% PI 1.88% R 0.679 | HRV 34.5 Some stress | quality 100 | h 283
+  (raw IR 36604, red 31992 | 25.0 fps, 0.5 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  802 ms ok  BPM  72.1 | SpO2  93.0% PI 1.94% R 0.679 | HRV 34.9 Some stress | quality 100 | h 268
+Beat  837 ms ok  BPM  71.6 | SpO2  93.2% PI 1.94% R 0.673 | HRV 35.1 Calm | quality 100 | h 296
+  (raw IR 37114, red 32311 | 25.0 fps, 0.5 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  857 ms ok  BPM  70.9 | SpO2  93.3% PI 2.04% R 0.667 | HRV 37.4 Calm | quality 100 | h 271
+Beat  867 ms ok  BPM  70.3 | SpO2  93.4% PI 2.24% R 0.666 | HRV 37.4 Calm | quality 100 | h 298
+  (raw IR 37240, red 32460 | 25.0 fps, 0.3 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  875 ms ok  BPM  70.0 | SpO2  93.4% PI 2.41% R 0.666 | HRV 37.5 Calm | quality 100 | h 283
+Beat  880 ms ok  BPM  69.5 | SpO2  93.4% PI 2.41% R 0.666 | HRV 37.5 Calm | quality 100 | h 279
+Beat  786 ms ok  BPM  70.4 | SpO2  93.4% PI 2.41% R 0.666 | HRV 36.6 Calm | quality 100 | h 257
+  (raw IR 36799, red 32170 | 25.0 fps, 0.6 pages/frame, frame 5 ms, max 33 ms | FIFO resets 0)
+Beat  797 ms ok  BPM  71.6 | SpO2  93.4% PI 2.38% R 0.666 | HRV 36.5 Calm | quality 100 | h 263
+Beat  765 ms ok  BPM  72.0 | SpO2  93.5% PI 2.33% R 0.660 | HRV 38.2 Calm | quality 100 | h 250
+  (raw IR 37211, red 32418 | 25.0 fps, 0.3 pages/frame, frame 1 ms, max 33 ms | FIFO resets 0)
+Beat  788 ms ok  BPM  72.6 | SpO2  93.8% PI 2.33% R 0.646 | HRV 38.0 Calm | quality 100 | h 263
+Beat  831 ms ok  BPM  72.8 | SpO2  93.7% PI 2.16% R 0.652 | HRV 37.9 Calm | quality 100 | h 267
+Beat  862 ms ok  BPM  72.9 | SpO2  93.8% PI 2.10% R 0.646 | HRV 38.0 Calm | quality 100 | h 231
+  (raw IR 36900, red 32186 | 25.0 fps, 0.3 pages/frame, frame 1 ms, max 33 ms | FIFO resets 0)
+Beat  829 ms ok  BPM  73.4 | SpO2  93.8% PI 2.03% R 0.648 | HRV 37.3 Calm | quality 100 | h 220
+Beat  774 ms ok  BPM  74.6 | SpO2  93.8% PI 2.00% R 0.648 | HRV 37.4 Calm | quality 100 | h 246
+  (raw IR 37034, red 32276 | 25.0 fps, 0.3 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  730 ms ok  BPM  75.3 | SpO2  93.7% PI 2.00% R 0.650 | HRV 37.6 Calm | quality 100 | h 243
+Beat  771 ms ok  BPM  75.6 | SpO2  93.7% PI 1.99% R 0.650 | HRV 38.1 Calm | quality 100 | h 211
+Beat  799 ms ok  BPM  75.2 | SpO2  93.5% PI 1.95% R 0.662 | HRV 38.0 Calm | quality 100 | h 159
+  (raw IR 37322, red 32336 | 25.0 fps, 0.4 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  760 ms ok  BPM  75.5 | SpO2  93.2% PI 1.94% R 0.671 | HRV 38.0 Calm | quality 100 | h 136
+Beat  813 ms ok  BPM  75.7 | SpO2  93.2% PI 1.81% R 0.673 | HRV 37.9 Calm | quality 100 | h 123
+  (raw IR 37618, red 32491 | 24.5 fps, 0.4 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  870 ms ok  BPM  75.6 | SpO2  92.9% PI 1.60% R 0.683 | HRV 38.0 Calm | quality 100 | h 173
+Beat  842 ms ok  BPM  75.5 | SpO2  92.9% PI 1.41% R 0.683 | HRV 38.5 Calm | quality 100 | h 181
+Beat  811 ms ok  BPM  75.0 | SpO2  92.9% PI 1.39% R 0.683 | HRV 39.0 Calm | quality 100 | h 191
+  (raw IR 37219, red 32264 | 25.0 fps, 0.4 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  819 ms ok  BPM  74.0 | SpO2  92.9% PI 1.32% R 0.683 | HRV 38.9 Calm | quality 100 | h 170
+Beat  871 ms ok  BPM  72.9 | SpO2  92.9% PI 1.32% R 0.685 | HRV 38.7 Calm | quality 100 | h 222
+  (raw IR 37335, red 32415 | 25.0 fps, 0.2 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  836 ms ok  BPM  72.5 | SpO2  93.1% PI 1.32% R 0.675 | HRV 38.5 Calm | quality 100 | h 217
+Beat  793 ms ok  BPM  72.1 | SpO2  93.1% PI 1.39% R 0.675 | HRV 37.2 Calm | quality 100 | h 212
+  (raw IR 37004, red 32138 | 25.0 fps, 0.5 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  811 ms ok  BPM  72.1 | SpO2  93.3% PI 1.51% R 0.667 | HRV 36.8 Calm | quality 100 | h 204
+Beat  830 ms ok  BPM  72.6 | SpO2  93.3% PI 1.63% R 0.667 | HRV 37.0 Calm | quality 100 | h 186
+Beat  813 ms ok  BPM  72.9 | SpO2  93.1% PI 1.67% R 0.674 | HRV 36.8 Calm | quality 100 | h 201
+  (raw IR 37176, red 32270 | 25.0 fps, 0.3 pages/frame, frame 1 ms, max 33 ms | FIFO resets 0)
+Beat  794 ms ok  BPM  73.1 | SpO2  93.1% PI 1.67% R 0.674 | HRV 36.1 Calm | quality 100 | h 222
+Beat  828 ms ok  BPM  73.0 | SpO2  93.3% PI 1.69% R 0.669 | HRV 36.3 Calm | quality 100 | h 227
+  (raw IR 37418, red 32449 | 25.0 fps, 0.4 pages/frame, frame 2 ms, max 33 ms | FIFO resets 0)
+Beat  857 ms ok  BPM  73.1 | SpO2  93.5% PI 1.72% R 0.661 | HRV 36.1 Calm | quality 100 | h 216
+Beat  811 ms ok  BPM  73.4 | SpO2  93.3% PI 1.69% R 0.669 | HRV 36.1 Calm | quality 100 | h 182
+Beat  825 ms ok  BPM  73.1 | SpO2  93.5% PI 1.69% R 0.661 | HRV 35.8 Calm | quality 100 | h 214
+  (raw IR 37000, red 32165 | 25.0 fps, 0.3 pages/frame, frame 1 ms, max 33 ms | FIFO resets 0)
+Beat  823 ms ok  BPM  72.9 | SpO2  93.5% PI 1.74% R 0.661 | HRV 36.2 Calm | quality 100 | h 231
+Beat  825 ms ok  BPM  73.0 | SpO2  93.5% PI 1.80% R 0.661 | HRV 36.1 Calm | quality 100 | h 238
+  (raw IR 37224, red 32296 | 25.0 fps, 0.2 pages/frame, frame 1 ms, max 33 ms | FIFO resets 0)
+Beat  789 ms ok  BPM  73.3 | SpO2  93.5% PI 1.84% R 0.659 | HRV 36.1 Calm | quality 100 | h 235
+Beat  813 ms ok  BPM  73.0 | SpO2  93.5% PI 1.82% R 0.659 | HRV 35.8 Calm | quality 100 | h 228

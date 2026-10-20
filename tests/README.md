@@ -5,10 +5,23 @@ These run on a PC, not on the ESP32. They feed a simulated finger (`sim_finger.h
 Run from the repo root:
 
 ```
-g++ -std=c++17 -O2 -I firmware/04_display tests/test_heart_rate.cpp -o test_hr && ./test_hr
-g++ -std=c++17 -O2 -I firmware/04_display tests/test_spo2.cpp -o test_spo2 && ./test_spo2
-g++ -std=c++17 -O2 -I firmware/04_display tests/test_quality.cpp -o test_quality && ./test_quality
+g++ -std=c++17 -O2 -I firmware/05_hrv tests/test_heart_rate.cpp -o test_hr && ./test_hr
+g++ -std=c++17 -O2 -I firmware/05_hrv tests/test_spo2.cpp -o test_spo2 && ./test_spo2
+g++ -std=c++17 -O2 -I firmware/05_hrv tests/test_quality.cpp -o test_quality && ./test_quality
+g++ -std=c++17 -O2 -I firmware/05_hrv tests/test_hrv.cpp -o test_hrv && ./test_hrv
 ```
+
+Replay a recorded Serial log through the HRV code:
+
+```
+g++ -std=c++17 -O2 -I firmware/05_hrv tests/replay_log.cpp -o replay_log
+./replay_log validation/logs/phase3.txt
+./replay_log validation/logs/hrv_slow.txt all
+```
+
+Without `all`, intervals marked "rej" in the log leave a gap. With `all`, every interval is used and the HRV code decides. That's for logs recorded with the old Phase 5 code, which rejected real intervals during slow breathing.
+
+The screen renders need `-I tests` as well (they use the simulated finger).
 
 On Windows this works with MinGW g++ or in WSL.
 
@@ -19,8 +32,10 @@ On Windows this works with MinGW g++ or in WSL.
 ```
 git clone --depth 1 https://github.com/olikraus/u8g2.git
 gcc -O2 -c u8g2/csrc/*.c
-g++ -std=c++17 -O2 -I u8g2/csrc -I firmware/04_display tests/render_screens.cpp *.o -o render
-mkdir screens && ./render screens
+g++ -std=c++17 -O2 -I u8g2/csrc -I firmware/05_hrv -I tests tests/render_screens.cpp *.o -o render
+mkdir -p screens/movement && ./render screens
 pip install pillow
-python tests/screens_to_png.py screens docs/images/phase4_screens.png
+python tests/screens_to_png.py screens docs/images/phase5_screens.png
 ```
+
+(`docs/images/phase5_hrv_screens.png` is the same thing with only the four HRV screens copied into their own folder.)

@@ -13,14 +13,15 @@ Note: this is a student project, not a medical device.
 - 1.3" OLED, I2C (SH1106)
 - 2 x 4.7k resistors (I2C pull-ups)
 - Li-Po battery + TP4056 charger (later)
-- Push button, vibration motor (later)
+- Push button on GPIO4 (switch screens, start/stop a session)
+- Vibration motor (later)
 - Zero PCB + 3D printed case (later)
 
 Wiring and parts list: [docs/HARDWARE.md](docs/HARDWARE.md)
 
 Problems I ran into and how I fixed them: [docs/DEBUG_LOG.md](docs/DEBUG_LOG.md)
 
-![Screens](docs/images/phase4_screens.png)
+![Screens](docs/images/phase5_screens.png)
 
 ## Folders
 
@@ -39,7 +40,7 @@ hardware/      perfboard layout and photos (later)
 1. Arduino IDE with the esp32 board package (Espressif).
 2. Board: ESP32C3 Dev Module, and turn on "USB CDC On Boot", otherwise nothing shows in Serial.
 3. Install MAX30100lib by OXullo Intersecans and U8g2 by olikraus. If you have any other MAX30100 library installed, remove it (see debug log).
-4. Wire it as in HARDWARE.md and upload the latest phase folder (now `firmware/04_display`).
+4. Wire it as in HARDWARE.md and upload the latest phase folder (now `firmware/05_hrv`).
 5. Keep your finger lightly on the sensor. The OLED shows the values, and Serial Monitor (115200) shows one line per beat.
 
 ## Progress
@@ -49,7 +50,7 @@ hardware/      perfboard layout and photos (later)
 - [x] Phase 2: filtering and heart rate
 - [x] Phase 3: SpO2 and perfusion index
 - [x] Phase 4: OLED screens, button, signal quality
-- [ ] Phase 5: HRV and stress score
+- [x] Phase 5: HRV and stress level
 - [ ] Phase 6: breathing rate
 - [ ] Phase 7: guided breathing mode
 - [ ] Phase 8: BLE + web dashboard
@@ -64,12 +65,26 @@ Notes per phase:
 - [Phase 2: filtering and heart rate](docs/phase2_heart_rate.md)
 - [Phase 3: SpO2 and perfusion index](docs/phase3_spo2.md)
 - [Phase 4: OLED screens, button and signal quality](docs/phase4_display.md)
+- [Phase 5: HRV and stress level](docs/phase5_hrv.md)
 
 PC tests and screen renders: [tests/README.md](tests/README.md)
 
-## Results
+## Results so far
 
-Will add after testing.
+Measured on my own finger, sitting still. Not a medical device, and the SpO2 formula isn't calibrated yet (Phase 11).
+
+| What | Result |
+|---|---|
+| Heart rate vs phone app (3 readings) | PulseLab 2-6 BPM lower, average -3.9 BPM |
+| Beat timing check | intervals from the ESP32 matched the Serial timestamps within 1% |
+| SpO2 (uncalibrated) | 97.6-98.4% sitting still, R about 0.47 |
+| Perfusion index | about 1.6-2.8% |
+| OLED | 25 fps, ~14 ms per frame, no sensor FIFO stalls in 2 min |
+| Beat intervals, 2 min still | 1 of 132 rejected (no OLED), 7 of 137 rejected (with OLED) |
+| HRV (RMSSD), 2 min still | 38.9 ms and 48.8 ms in two recordings ("Calm") |
+| HRV, sitting vs slow breathing (6/min) | about 36 ms ("Calm") vs about 60 ms ("Relaxed"), 2.5 min each |
+
+Details and how each was measured are in the phase notes.
 
 ## License
 

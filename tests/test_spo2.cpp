@@ -1,6 +1,6 @@
 // Tests the Phase 3 SpO2 / perfusion index code on simulated red + IR signals.
 //
-//   g++ -std=c++17 -O2 -I firmware/04_display tests/test_spo2.cpp -o test_spo2
+//   g++ -std=c++17 -O2 -I firmware/05_hrv tests/test_spo2.cpp -o test_spo2
 //   ./test_spo2
 //
 // The simulated finger has a known "true" R built in:
