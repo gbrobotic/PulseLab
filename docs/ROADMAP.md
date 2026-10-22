@@ -99,7 +99,7 @@ Option to decide here: replace the 1.3" OLED with a 2" colour TFT (ST7789, 240x3
 - library: LovyanGFX (compiled fine for the ESP32-C3 with core 3.3.12), using a sprite for the wave
 - costs more power (backlight ~40-60 mA vs ~10-20 mA) and needs a bigger case
 
-**Done (22 Oct 2026).** Stayed with the OLED. Zero PCB soldered (61 x 48 mm, point-to-point wiring, modules on female headers), case designed and checked by `enclosure/case.py`. See `phase10_build.md` and `images/after_zeropcb.jpeg`. The "readings in the case vs breadboard" table will be filled in together with Phase 11.
+**Done (22 Oct 2026).** Stayed with the OLED. Zero PCB soldered (61 x 48 mm, point-to-point wiring, modules on female headers). See `phase10_build.md` and `images/after_zeropcb.jpeg`. The case is designed and checked by `enclosure/case.py`, but not printed for the submission: building it is future work. The "zero PCB vs breadboard" readings will be filled in together with Phase 11.
 
 ## Phase 11: accuracy test
 
@@ -118,6 +118,7 @@ README with photos, a GIF of the screen and dashboard, block diagram and results
 ## Future work
 
 - battery, charging and deep sleep (Phase 9)
+- print and fit the 3D case (design already in `enclosure/`)
 - SpO2 calibration over a wider range (needs a lab with controlled desaturation)
 - testing on more people, including different skin tones
 - vibration motor for the breathing pacer

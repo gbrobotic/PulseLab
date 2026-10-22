@@ -35,16 +35,14 @@ Everything runs on the ESP32-C3 in one loop. The same signal processing code is 
 - 1.3" OLED, I2C (SH1106)
 - 2 x 4.7k resistors (I2C pull-ups to 3.3 V)
 - Push button on GPIO4 (switch screens, start/stop a session)
-- Zero PCB (61 x 48 mm) and a 3D printed case
+- Zero PCB (61 x 48 mm)
 - Powered over USB-C (battery was planned, moved to future work)
 
-Wiring and parts list: [docs/HARDWARE.md](docs/HARDWARE.md). Board layout and soldering: [docs/phase10_build.md](docs/phase10_build.md).
+Wiring and parts list: [docs/HARDWARE.md](docs/HARDWARE.md). Board layout and soldering: [docs/phase10_build.md](docs/phase10_build.md). A 3D printed case is designed (`enclosure/`) but not built yet, it's future work.
 
 Problems I ran into and how I fixed them: [docs/DEBUG_LOG.md](docs/DEBUG_LOG.md)
 
-| Screens (PC render of the real drawing code) | Case |
-|---|---|
-| ![Screens](docs/images/phase5_screens.png) | ![Case](docs/images/phase10_case_closed.png) |
+![Screens (PC render of the real drawing code)](docs/images/phase5_screens.png)
 
 ## Folders
 
@@ -54,7 +52,7 @@ firmware/      Arduino sketches, one folder per phase (latest: 08_ble)
 tests/         PC tests for the signal processing code
 validation/    accuracy test script, Serial recorder, beat interval checker, raw logs
 dashboard/     Web Bluetooth page
-enclosure/     3D case (STEP, STL) and the script that makes and checks it
+enclosure/     3D case design (STEP, STL), not built yet (future work)
 hardware/      zero PCB layout script and pictures
 ```
 
@@ -79,7 +77,7 @@ hardware/      zero PCB layout script and pictures
 - [x] Phase 7: guided breathing mode
 - [x] Phase 8: BLE + web dashboard
 - [ ] ~~Phase 9: battery~~ skipped, USB powered (future work)
-- [x] Phase 10: zero PCB and 3D case
+- [x] Phase 10: zero PCB (3D case designed, building it is future work)
 - [ ] Phase 11: accuracy test vs commercial oximeter (procedure and analysis ready, readings to be taken)
 - [x] Phase 12: README and report
 
@@ -93,7 +91,7 @@ Notes per phase:
 - [Phase 6: breathing rate](docs/phase6_breathing.md)
 - [Phase 7: guided breathing](docs/phase7_guided.md)
 - [Phase 8: Bluetooth and web dashboard](docs/phase8_ble.md)
-- [Phase 10: zero PCB and case](docs/phase10_build.md)
+- [Phase 10: zero PCB](docs/phase10_build.md)
 - [Phase 11: accuracy test](docs/phase11_accuracy.md)
 
 PC tests and screen renders: [tests/README.md](tests/README.md)
