@@ -2,37 +2,60 @@
 
 Pocket vitals analyzer using a MAX30100 sensor and an ESP32-C3 Super Mini. This is my minor project.
 
-The idea is simple: instead of just using a library and printing BPM, I want to work with the raw PPG signal from the sensor and do the processing myself. From the same signal I'm planning to get heart rate, SpO2, HRV (for a stress estimate) and breathing rate, show it on an OLED and send it over BLE to a web page. At the end I'll compare my readings with a normal fingertip pulse oximeter to see how accurate it really is.
+Instead of just using a library and printing BPM, I work with the raw PPG signal from the sensor and do all the processing myself. From that one signal PulseLab gets **heart rate, SpO2, perfusion index, HRV (with a stress level) and breathing rate**, shows them on an OLED, runs a **guided slow-breathing session**, and sends everything over **Bluetooth** to a web page and to fitness apps.
 
 Note: this is a student project, not a medical device.
+
+![PulseLab on the zero PCB](docs/images/after_zeropcb.jpeg)
+
+## How it works
+
+```mermaid
+flowchart LR
+    S[MAX30100<br/>red + IR LED<br/>100 Hz] -->|I2C| A[DC removal<br/>band-pass 0.5-4 Hz]
+    A --> B[Beat detection<br/>slope peaks, adaptive threshold]
+    B --> HR[Heart rate]
+    B --> HRV[HRV: RMSSD, SDNN<br/>stress level]
+    B --> SP[SpO2 + PI<br/>ratio of ratios per beat]
+    B --> BR[Breathing rate<br/>timing + height + baseline<br/>Goertzel, smart fusion]
+    A --> Q[Signal quality<br/>finger, motion, clipping]
+    HR & HRV & SP & BR & Q --> G[Guided breathing<br/>before / slow / after]
+    HR & HRV & SP & BR & Q & G --> O[OLED 1.3 in<br/>6 screens + button]
+    HR & HRV & SP & BR & Q & G --> BLE[BLE: Heart Rate Service<br/>+ PulseLab service]
+    BLE --> W[Web dashboard<br/>Web Bluetooth, CSV]
+    BLE --> F[Fitness apps<br/>nRF Connect etc.]
+```
+
+Everything runs on the ESP32-C3 in one loop. The same signal processing code is also compiled on the PC and tested against a simulated finger and my own raw recordings (`tests/`).
 
 ## Hardware
 
 - ESP32-C3 Super Mini
-- MAX30100 module (green board)
+- MAX30100 module (green board), its 1.8 V pull-ups removed
 - 1.3" OLED, I2C (SH1106)
-- 2 x 4.7k resistors (I2C pull-ups)
-- Li-Po battery + TP4056 charger (later)
+- 2 x 4.7k resistors (I2C pull-ups to 3.3 V)
 - Push button on GPIO4 (switch screens, start/stop a session)
-- Vibration motor (later)
-- Zero PCB + 3D printed case (later)
+- Zero PCB (61 x 48 mm) and a 3D printed case
+- Powered over USB-C (battery was planned, moved to future work)
 
-Wiring and parts list: [docs/HARDWARE.md](docs/HARDWARE.md)
+Wiring and parts list: [docs/HARDWARE.md](docs/HARDWARE.md). Board layout and soldering: [docs/phase10_build.md](docs/phase10_build.md).
 
 Problems I ran into and how I fixed them: [docs/DEBUG_LOG.md](docs/DEBUG_LOG.md)
 
-![Screens](docs/images/phase5_screens.png)
+| Screens (PC render of the real drawing code) | Case |
+|---|---|
+| ![Screens](docs/images/phase5_screens.png) | ![Case](docs/images/phase10_case_closed.png) |
 
 ## Folders
 
 ```
-docs/          plan, hardware notes, debug log, images
-firmware/      Arduino sketches, one folder per phase
+docs/          plan, phase notes, hardware notes, debug log, images
+firmware/      Arduino sketches, one folder per phase (latest: 08_ble)
 tests/         PC tests for the signal processing code
 validation/    accuracy test script, Serial recorder, beat interval checker, raw logs
-dashboard/     web bluetooth page (later)
-enclosure/     3D design files (later)
-hardware/      perfboard layout and photos (later)
+dashboard/     Web Bluetooth page
+enclosure/     3D case (STEP, STL) and the script that makes and checks it
+hardware/      zero PCB layout script and pictures
 ```
 
 ## How to run
@@ -40,8 +63,9 @@ hardware/      perfboard layout and photos (later)
 1. Arduino IDE with the esp32 board package (Espressif).
 2. Board: ESP32C3 Dev Module, and turn on "USB CDC On Boot", otherwise nothing shows in Serial.
 3. Install MAX30100lib by OXullo Intersecans and U8g2 by olikraus. If you have any other MAX30100 library installed, remove it (see debug log).
-4. Wire it as in HARDWARE.md and upload the latest phase folder (now `firmware/05_hrv`).
+4. Wire it as in HARDWARE.md and upload `firmware/08_ble`.
 5. Keep your finger lightly on the sensor. The OLED shows the values, and Serial Monitor (115200) shows one line per beat.
+6. Dashboard: open `https://gbrobotic.github.io/PulseLab/dashboard/` in Chrome or Edge (Android or laptop), press Connect. Without the board, press Demo.
 
 ## Progress
 
@@ -54,10 +78,10 @@ hardware/      perfboard layout and photos (later)
 - [x] Phase 6: breathing rate
 - [x] Phase 7: guided breathing mode
 - [x] Phase 8: BLE + web dashboard
-- [ ] Phase 9: battery
-- [ ] Phase 10: zero PCB and 3D case
-- [ ] Phase 11: accuracy test vs commercial oximeter
-- [ ] Phase 12: final report and demo
+- [ ] ~~Phase 9: battery~~ skipped, USB powered (future work)
+- [x] Phase 10: zero PCB and 3D case
+- [ ] Phase 11: accuracy test vs commercial oximeter (procedure and analysis ready, readings to be taken)
+- [x] Phase 12: README and report
 
 Full plan with what each phase involves: [docs/ROADMAP.md](docs/ROADMAP.md)
 
@@ -68,9 +92,9 @@ Notes per phase:
 - [Phase 5: HRV and stress level](docs/phase5_hrv.md)
 - [Phase 6: breathing rate](docs/phase6_breathing.md)
 - [Phase 7: guided breathing](docs/phase7_guided.md)
-- [Phase 8: Bluetooth and web dashboard](docs/phase8_ble.md) (works from an Android phone; one laptop doesn't connect yet, see the notes)
-
-Live dashboard (Chrome/Edge, needs the board, or press Demo): `dashboard/` - see [dashboard/README.md](dashboard/README.md)
+- [Phase 8: Bluetooth and web dashboard](docs/phase8_ble.md)
+- [Phase 10: zero PCB and case](docs/phase10_build.md)
+- [Phase 11: accuracy test](docs/phase11_accuracy.md)
 
 PC tests and screen renders: [tests/README.md](tests/README.md)
 
@@ -78,7 +102,7 @@ Research papers the methods are based on: [docs/REFERENCES.md](docs/REFERENCES.m
 
 ## Results so far
 
-Measured on my own finger, sitting still. Not a medical device, and the SpO2 formula isn't calibrated yet (Phase 11).
+Measured on my own finger, sitting still. Not a medical device. The SpO2 formula isn't calibrated yet, and the test against a commercial oximeter (Phase 11) is still to be done.
 
 | What | Result |
 |---|---|
@@ -94,8 +118,16 @@ Measured on my own finger, sitting still. Not a medical device, and the SpO2 for
 | Breathing rate, free breathing | 31.3 /min (median) vs ~32 counted by hand |
 | Guided breathing (1 min / 3 min at 6 per min / 1 min) | session 1: SDNN 20 -> 65 -> 38 ms, HR swing 21 BPM per breath, breathing measured 6.2 /min; session 2: swing 20 BPM, breathing 6.1 /min |
 | Bluetooth running (phone connected, 10 msg/s) | loop max 64 ms worst, 0 FIFO resets in ~6 min; nRF Connect shows the standard heart rate |
+| Accuracy vs commercial oximeter (Phase 11) | to be done |
 
 Details and how each was measured are in the phase notes.
+
+## Limitations
+
+- The MAX30100 is a hobby sensor, not a medical one, and the SpO2 formula is the textbook one until Phase 11.
+- Motion, cold fingers (weak pulse), pressing too hard, nail polish and bright light all affect the readings. PulseLab hides values when it detects these, but can't catch everything.
+- Optical oximeters are known to be less accurate on darker skin. I've only tested on a few people so far.
+- HRV and breathing rate come from 60 s windows, shorter than the 5 min standard, and the stress level is a rough guide, not a validated measure.
 
 ## License
 

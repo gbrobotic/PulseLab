@@ -84,6 +84,8 @@ Built (20 Oct 2026), see `phase8_ble.md`. The FreeRTOS split is not done on purp
 
 Battery voltage on GPIO3 through a divider, battery % on screen, deep sleep when idle. Measure the actual current and work out battery life.
 
+**Skipped (22 Oct 2026).** PulseLab runs from USB, which is enough for a desk device and the demo. The board layout in Phase 10 has no battery, charger or switch. Moved to future work; GPIO3 is still free for the divider.
+
 ## Phase 10: zero PCB and case
 
 Plan the layout on paper first, female headers for the ESP32 and sensor. Case in Fusion 360 with a finger slot that blocks light. STL/STEP files go in `enclosure/`.
@@ -97,12 +99,26 @@ Option to decide here: replace the 1.3" OLED with a 2" colour TFT (ST7789, 240x3
 - library: LovyanGFX (compiled fine for the ESP32-C3 with core 3.3.12), using a sprite for the wave
 - costs more power (backlight ~40-60 mA vs ~10-20 mA) and needs a bigger case
 
+**Done (22 Oct 2026).** Stayed with the OLED. Zero PCB soldered (61 x 48 mm, point-to-point wiring, modules on female headers), case designed and checked by `enclosure/case.py`. See `phase10_build.md` and `images/after_zeropcb.jpeg`. The "readings in the case vs breadboard" table will be filled in together with Phase 11.
+
 ## Phase 11: accuracy test
 
 Take readings with PulseLab and a commercial oximeter at the same time. Aim for 30+ readings, a few people, resting and after light exercise. Fill `validation/readings_template.csv` and run `python validation/analyze.py readings.csv`.
 
 It gives mean error, bias and Bland-Altman plots. Use the first set to calibrate SpO2, then test again on new readings (not the same ones used for calibrating).
 
+**Pending, to do before submission.** `analyze.py` now also fits the SpO2 calibration on the `cal` readings and tests it on the `test` readings, and takes R from the Serial beat line. Checked on simulated readings only (`validation/sim/`, clearly marked, not results). Procedure: `phase11_accuracy.md`.
+
 ## Phase 12: report and demo
 
 README with photos, a GIF of the screen and dashboard, block diagram and results. Report with theory, design, testing and limitations (sensor accuracy, motion, skin tone effects on optical sensors, not a medical device).
+
+**Done except the Phase 11 numbers (22 Oct 2026).** README updated with the board photo, block diagram and results. Report written; the accuracy section has empty slots for the Phase 11 results.
+
+## Future work
+
+- battery, charging and deep sleep (Phase 9)
+- SpO2 calibration over a wider range (needs a lab with controlled desaturation)
+- testing on more people, including different skin tones
+- vibration motor for the breathing pacer
+- 2" colour TFT (notes in Phase 10)
